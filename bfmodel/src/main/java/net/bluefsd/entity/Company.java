@@ -10,11 +10,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "company")
 @org.hibernate.annotations.Proxy(lazy = false)
-
 public class Company {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long id = -1L;
 
 	@Column(name = "company_cd")
 	private String companyCd;

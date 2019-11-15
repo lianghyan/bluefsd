@@ -21,8 +21,8 @@ public class BFUser {
 	@Column(name = "password")
 	private String password;
 
-	@Column(name = "user_type")
-	private String userType;
+	@Column(name = "role")
+	private String role;
 
 	@Column(name = "email")
 	private String email;
@@ -30,8 +30,8 @@ public class BFUser {
 	@Column(name = "mobile_number")
 	private String mobileNumber;
 
-	@Column(name = "confirmed")
-	private String confirmed;
+	@Column(name = "confirmed" )
+	private String confirmed="Y";
 
 	public Long getId() {
 		return id;
@@ -57,12 +57,12 @@ public class BFUser {
 		this.password = password;
 	}
 
-	public String getUserType() {
-		return userType;
+	public String getRole() {
+		return role;
 	}
 
-	public void setUserType(String userType) {
-		this.userType = userType;
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public String getEmail() {
