@@ -15,10 +15,10 @@ public class CompanySector {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Column(name = "sector_cd")
+	@Column(name = "sector_cd", length=20)
 	private String sectorCd;
 
-	@Column(name = "company_cd")
+	@Column(name = "company_cd", length=20)
 	private String companyCd;
 
 	public long getId() {

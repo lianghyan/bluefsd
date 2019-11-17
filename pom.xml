@@ -89,9 +89,8 @@
   	<module>bfmodel</module>
   	<module>bfuser</module>
     <module>bfcompany</module>
-    <module>bfsector</module>
     <module>bfupload</module>
     <module>bfbasetest</module>
-    <module>bfstockexchange</module>
+    <module>bfexchange</module>
   </modules>
 </project>

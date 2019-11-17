@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.bluefsd.comm.controller.BaseController;
+import net.bluefsd.company.dao.BoardRepository;
+import net.bluefsd.company.dao.CompanySectorRepository;
+import net.bluefsd.company.dao.IPORepository;
+import net.bluefsd.company.dao.StockPriceRepository;
+import net.bluefsd.company.dao.StockRepository;
 import net.bluefsd.company.service.CompanyService;
 import net.bluefsd.entity.Company;
 import net.bluefsd.model.CompanyDetails;
@@ -17,7 +22,21 @@ import net.bluefsd.model.CompanyDetails;
 public class CompanyController extends BaseController {
 	@Autowired
 	CompanyService companyService;
+	
+	@Autowired
+	BoardRepository boardRepository;
 
+	@Autowired
+	CompanySectorRepository companySectorRepository;
+	
+	@Autowired
+	IPORepository ipoRepository;
+	
+	@Autowired
+	StockPriceRepository stockPriceRepository;
+	
+	@Autowired
+	StockRepository stockRepository;
 	@RequestMapping(value = { "/add", "/create" }, method = RequestMethod.POST)
 	public Company addCompany(Company newComp) throws Exception {
 		Company comp = companyService.findCompanyByCd(newComp.getCompanyCd());

@@ -2,8 +2,6 @@ package net.bluefsd.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -11,11 +9,9 @@ import javax.persistence.Table;
 @Table(name = "company")
 @org.hibernate.annotations.Proxy(lazy = false)
 public class Company {
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id = -1L;
-
-	@Column(name = "company_cd")
+	@Column(name = "company_cd", unique=true, nullable=false, length=20)
 	private String companyCd;
 
 	@Column(name = "company_name")
@@ -26,14 +22,6 @@ public class Company {
 
 	@Column(name = "brief")
 	private String brief;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getCompanyCd() {
 		return companyCd;

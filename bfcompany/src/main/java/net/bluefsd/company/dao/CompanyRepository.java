@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import net.bluefsd.entity.Company;
 
 @Repository(value = "companyRepository")
-public interface CompanyRepository extends JpaRepository<Company, Long> {
+public interface CompanyRepository extends JpaRepository<Company, String> {
 
 	@Transactional(readOnly = true)
 	@Query(value = "SELECT u FROM Company u")
@@ -24,5 +24,5 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
 
 	@Transactional(readOnly = true)
 	@Query(value = "SELECT u FROM Company u WHERE companyCd=:companyCd")
-	public Company getCompanyByCd(@Param("companyCd") String companyCd);
+	public Company findCompanyByCd(@Param("companyCd") String companyCd);
 }

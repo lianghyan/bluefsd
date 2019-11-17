@@ -19,7 +19,7 @@ public class CompanyService {
 	}
 
 	public Company findCompanyByCd(String companyCd) {
-		return companyRepository.getCompanyByCd(companyCd);
+		return companyRepository.findCompanyByCd(companyCd);
 	}
 
 	public List<Company> findMatchedCompany(String input) {

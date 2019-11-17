@@ -20,7 +20,6 @@ public class CompanyManager {
 	}
 
 	public static void update(MockHttpServletRequestBuilder request, int id) {
-		request.param("id", "" + ""+id);
 		request.param("companyCd", "IBM");
 		request.param("companyName", "International Business Machine Company");
 		request.param("ceoName", "John");

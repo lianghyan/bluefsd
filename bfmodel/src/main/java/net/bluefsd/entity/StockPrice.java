@@ -1,5 +1,7 @@
 package net.bluefsd.entity;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,21 +17,16 @@ public class StockPrice {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Column(name = "company_cd")
-	private String companyCd;
-	
-	@Column(name = "stock_exch_cd")
-	private String stockEcxchCd;
+	@Column(name = "stock_cd", length=20)
+	private String stockCd;
 	
 	@Column(name = "price")
 	private String price;
 	
-	@Column(name = "cur_date")
-	private String Date;
-	
 	@Column(name = "cur_time")
-	private String Time;
-
+	private Timestamp  curTime;
+	
+ 
 	public long getId() {
 		return id;
 	}
@@ -38,20 +35,13 @@ public class StockPrice {
 		this.id = id;
 	}
 
-	public String getCompanyCd() {
-		return companyCd;
+
+	public String getStockCd() {
+		return stockCd;
 	}
 
-	public void setCompanyCd(String companyCd) {
-		this.companyCd = companyCd;
-	}
-
-	public String getStockEcxchCd() {
-		return stockEcxchCd;
-	}
-
-	public void setStockEcxchCd(String stockEcxchCd) {
-		this.stockEcxchCd = stockEcxchCd;
+	public void setStockCd(String stockCd) {
+		this.stockCd = stockCd;
 	}
 
 	public String getPrice() {
@@ -62,21 +52,11 @@ public class StockPrice {
 		this.price = price;
 	}
 
-	public String getDate() {
-		return Date;
+	public Timestamp getCurTime() {
+		return curTime;
 	}
 
-	public void setDate(String date) {
-		Date = date;
+	public void setCurTime(Timestamp curTime) {
+		this.curTime = curTime;
 	}
-
-	public String getTime() {
-		return Time;
-	}
-
-	public void setTime(String time) {
-		Time = time;
-	}
-	
-	
 }

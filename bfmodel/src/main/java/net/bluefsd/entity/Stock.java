@@ -8,26 +8,19 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "board_director")
+@Table(name = "stock")
 @org.hibernate.annotations.Proxy(lazy = false)
-public class BoardDirector {
+public class Stock {
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@Column(name = "stock_cd",length=20)
+	private String stockCd;
 
 	@Column(name = "company_cd", length=20)
 	private String companyCd;
 
-	@Column(name = "director_name")
-	private String directorName;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
+	@Column(name = "exch_cd", length=20)
+	private String exchCd;
 
 	public String getCompanyCd() {
 		return companyCd;
@@ -37,12 +30,20 @@ public class BoardDirector {
 		this.companyCd = companyCd;
 	}
 
-	public String getDirectorName() {
-		return directorName;
+	public String getStockCd() {
+		return stockCd;
 	}
 
-	public void setDirectorName(String directorName) {
-		this.directorName = directorName;
+	public void setStockCd(String stockCd) {
+		this.stockCd = stockCd;
+	}
+
+	public String getExchCd() {
+		return exchCd;
+	}
+
+	public void setExchCd(String exchCd) {
+		this.exchCd = exchCd;
 	}
 
 }

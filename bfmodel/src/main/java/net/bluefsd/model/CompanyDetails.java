@@ -6,7 +6,7 @@ import javax.persistence.Column;
 
 import net.bluefsd.entity.BoardDirector;
 import net.bluefsd.entity.Company;
-import net.bluefsd.entity.CompanyExchStock;
+import net.bluefsd.entity.Stock;
 
 public class CompanyDetails {
 	private Long id = -1L;
@@ -15,7 +15,7 @@ public class CompanyDetails {
 	private String ceoName;
 	private String brief;
 
-	CompanyExchStock stockExch;
+	Stock stockExch;
 	List<String> directors;
 	List<String> sectors;
 

@@ -1,4 +1,4 @@
-package net.bluefsd.company;
+package net.bluefsd.exchange;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
 @EnableAspectJAutoProxy(proxyTargetClass = true)
-@ComponentScan({ "net.bluefsd.model",  "net.bluefsd.comm",
+@ComponentScan({ "net.bluefsd.model",  "net.bluefsd.*.cfg", "net.bluefsd.*.filter", "net.bluefsd.comm",
 		"net.bluefsd.comm.log", "net.bluefsd.*.service", "net.bluefsd.*.controller" })
 
 //@ComponentScan("net.fsd.model, net.fsd.*.service, net.fsd.*.controller, net.fsd.security, net.fsd.comm.log")

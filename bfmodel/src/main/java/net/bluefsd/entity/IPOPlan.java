@@ -17,11 +17,11 @@ public class IPOPlan {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "company_cd")
+	@Column(name = "company_cd", length=20)
 	private String companyCd;
 
-	@Column(name = "stock_exch_cd")
-	private String stockExchCd;
+	@Column(name = "exchange_cd", length=20)
+	private String exchangeCd;
 
 	@Column(name = "price_per_share")
 	private double pricePerShare;
@@ -52,14 +52,6 @@ public class IPOPlan {
 
 	public void setCompanyCd(String companyCd) {
 		this.companyCd = companyCd;
-	}
-
-	public String getStockExchCd() {
-		return stockExchCd;
-	}
-
-	public void setStockExchCd(String stockExchCd) {
-		this.stockExchCd = stockExchCd;
 	}
 
 	public double getPricePerShare() {
@@ -102,4 +94,11 @@ public class IPOPlan {
 		this.remarks = remarks;
 	}
 
+	public String getExchangeCd() {
+		return exchangeCd;
+	}
+
+	public void setExchangeCd(String exchangeCd) {
+		this.exchangeCd = exchangeCd;
+	}
 }
