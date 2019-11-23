@@ -7,6 +7,7 @@ public class CompanyManager {
 		request.param("companyCd", "neu");
 		request.param("companyName", "neusoft company");
 		request.param("ceoName", "liujiren");
+		request.param("exchCd", "NSE");
 		request.param("brief", "Chinese software company");
 
 	}
@@ -15,6 +16,7 @@ public class CompanyManager {
 		request.param("companyCd", "IBM");
 		request.param("companyName", "International Business Machine Company");
 		request.param("ceoName", "John");
+		request.param("exchCd", "NSE");
 		request.param("brief", "software company");
 
 	}
@@ -23,6 +25,7 @@ public class CompanyManager {
 		request.param("companyCd", "IBM");
 		request.param("companyName", "International Business Machine Company");
 		request.param("ceoName", "John");
+		request.param("exchCd", "NSE");
 		request.param("brief", "software company");
 
 	}

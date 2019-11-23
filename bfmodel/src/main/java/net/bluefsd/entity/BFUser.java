@@ -21,17 +21,28 @@ public class BFUser {
 	@Column(name = "password")
 	private String password;
 
-	@Column(name = "role")
+	@Column(name = "role", length = 10)
 	private String role;
 
 	@Column(name = "email")
 	private String email;
 
-	@Column(name = "mobile_number")
+	@Column(name = "mobile_number", length = 30)
 	private String mobileNumber;
 
-	@Column(name = "confirmed" )
-	private String confirmed="Y";
+	@Column(name = "confirmed", length = 2)
+	private String confirmed = "N";
+
+	@Column(name = "verifyCode")
+	private String verifyCode;
+
+	public String getVerifyCode() {
+		return verifyCode;
+	}
+
+	public void setVerifyCode(String verifyCode) {
+		this.verifyCode = verifyCode;
+	}
 
 	public Long getId() {
 		return id;
@@ -88,6 +99,5 @@ public class BFUser {
 	public void setConfirmed(String confirmed) {
 		this.confirmed = confirmed;
 	}
-	
-	
+
 }

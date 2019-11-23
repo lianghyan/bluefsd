@@ -24,8 +24,7 @@ public class UserManager {
 		request.param("email", "liangydl@cn.ibm.com");
 		request.param("mobileNumber", "0411-8888");
 		request.param("role", "admin");
-
-	}
+ 	}
 
 	public static void update(MockHttpServletRequestBuilder request, int userId) {
 		request.param("id", "" + 2);

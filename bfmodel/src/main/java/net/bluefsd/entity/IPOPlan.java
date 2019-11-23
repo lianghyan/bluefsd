@@ -1,5 +1,6 @@
 package net.bluefsd.entity;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -17,10 +18,10 @@ public class IPOPlan {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "company_cd", length=20)
+	@Column(name = "company_cd", length = 20)
 	private String companyCd;
 
-	@Column(name = "exchange_cd", length=20)
+	@Column(name = "exchange_cd", length = 20)
 	private String exchangeCd;
 
 	@Column(name = "price_per_share")
@@ -30,10 +31,7 @@ public class IPOPlan {
 	private long totalShares;
 
 	@Column(name = "open_date")
-	private Date openDate;
-
-	@Column(name = "open_time")
-	private Date openTime;
+	private Timestamp openDate;
 
 	@Column(name = "remarks")
 	private String remarks;
@@ -70,20 +68,12 @@ public class IPOPlan {
 		this.totalShares = totalShares;
 	}
 
-	public Date getOpenDate() {
+	public Timestamp getOpenDate() {
 		return openDate;
 	}
 
-	public void setOpenDate(Date openDate) {
+	public void setOpenDate(Timestamp openDate) {
 		this.openDate = openDate;
-	}
-
-	public Date getOpenTime() {
-		return openTime;
-	}
-
-	public void setOpenTime(Date openTime) {
-		this.openTime = openTime;
 	}
 
 	public String getRemarks() {

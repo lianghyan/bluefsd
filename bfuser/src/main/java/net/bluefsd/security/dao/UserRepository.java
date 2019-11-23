@@ -14,4 +14,8 @@ public interface UserRepository extends JpaRepository<BFUser, Long> {
 	@Query(value = "SELECT u FROM BFUser u WHERE userName=:account or email=:account")
 	public BFUser findUserByName(String account);
 
+	@Transactional(readOnly = true)
+	@Query(value = "SELECT u FROM BFUser u WHERE verifyCode=:verifyCode")
+	public BFUser findUserByVerifyCode(String verifyCode);
+
 }

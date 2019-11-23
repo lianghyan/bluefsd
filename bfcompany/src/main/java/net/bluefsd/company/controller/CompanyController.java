@@ -1,5 +1,7 @@
 package net.bluefsd.company.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,13 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.bluefsd.comm.controller.BaseController;
-import net.bluefsd.company.dao.BoardRepository;
-import net.bluefsd.company.dao.CompanySectorRepository;
-import net.bluefsd.company.dao.IPORepository;
-import net.bluefsd.company.dao.StockPriceRepository;
-import net.bluefsd.company.dao.StockRepository;
 import net.bluefsd.company.service.CompanyService;
 import net.bluefsd.entity.Company;
+import net.bluefsd.entity.StockPrice;
 import net.bluefsd.model.CompanyDetails;
 
 @RestController
@@ -22,21 +20,7 @@ import net.bluefsd.model.CompanyDetails;
 public class CompanyController extends BaseController {
 	@Autowired
 	CompanyService companyService;
-	
-	@Autowired
-	BoardRepository boardRepository;
 
-	@Autowired
-	CompanySectorRepository companySectorRepository;
-	
-	@Autowired
-	IPORepository ipoRepository;
-	
-	@Autowired
-	StockPriceRepository stockPriceRepository;
-	
-	@Autowired
-	StockRepository stockRepository;
 	@RequestMapping(value = { "/add", "/create" }, method = RequestMethod.POST)
 	public Company addCompany(Company newComp) throws Exception {
 		Company comp = companyService.findCompanyByCd(newComp.getCompanyCd());
@@ -53,5 +37,9 @@ public class CompanyController extends BaseController {
 
 	public CompanyDetails findCompanyDetail(Company compDetails) {
 		return companyService.findCompanyDetail(compDetails);
+	}
+
+	public List<StockPrice> findPrice(String companyCd, String from, String to, String type) {
+		return null;
 	}
 }

@@ -23,7 +23,7 @@ public interface SectorRepository extends JpaRepository<Sector, Long> {
 	@Transactional(readOnly = true)
 	@Query(value = "SELECT p FROM StockPrice p, Stock s where TIMESTAMPDIFF(SECOND, :from, cur_time)>=0 and TIMESTAMPDIFF(SECOND, cur_time, :to)<0 "
 			+ "and p.stockCd=s.stockCd and s.companyCd in "
-			+ "(select companyCd from CompanySector cs where cs.sectorCd=:sectorCd)")
+			+ "(select companyCd from Company cs where cs.sectorCd=:sectorCd)")
 	public List<StockPrice> listSectorPrice(@Param("from") Timestamp from, @Param("to") Timestamp to,
 			@Param("sectorCd") String sectorCd);
 }

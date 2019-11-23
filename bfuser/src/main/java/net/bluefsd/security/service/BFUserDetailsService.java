@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import net.bluefsd.entity.BFUser;
 import net.bluefsd.security.dao.UserRepository;
 import net.bluefsd.security.filter.BearTokenUtil;
+import net.bluefsd.util.VerifyCodeUtil;
 
 @Service
 public class BFUserDetailsService implements UserDetailsService {
@@ -24,6 +25,9 @@ public class BFUserDetailsService implements UserDetailsService {
 
 	@Autowired
 	UserRepository userRepository;
+
+	@Autowired
+	MailService mailService;
 
 //	@Autowired
 //	private AuthenticationManager authenticationManager;
@@ -58,7 +62,6 @@ public class BFUserDetailsService implements UserDetailsService {
 		return token;
 	}
 
-
 	/*
 	 * 
 	 */
@@ -70,6 +73,8 @@ public class BFUserDetailsService implements UserDetailsService {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		final String rawPassword = userToAdd.getPassword();
 		userToAdd.setPassword(encoder.encode(rawPassword));
+		userToAdd.setVerifyCode(VerifyCodeUtil.generateVerifyCode(32));
+		userToAdd.setConfirmed("N");
 		return userRepository.save(userToAdd);
 	}
 
@@ -78,7 +83,17 @@ public class BFUserDetailsService implements UserDetailsService {
 	}
 
 	private void sendMail(BFUser userToAdd) {
+		mailService.sendMail(userToAdd);
+	}
 
+	public String verify(String verifyCode) {
+		BFUser user = userRepository.findUserByVerifyCode(verifyCode);
+		if (user != null) {
+			user.setConfirmed("Y");
+			userRepository.save(user);
+			return user.getUserName();
+		}
+		return null;
 	}
 
 }

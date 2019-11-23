@@ -17,16 +17,29 @@ public class StockPrice {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Column(name = "stock_cd", length=20)
+	@Column(name = "stock_cd", length = 20)
 	private String stockCd;
-	
+
 	@Column(name = "price")
-	private String price;
-	
+	private double price;
+
 	@Column(name = "cur_time")
-	private Timestamp  curTime;
-	
- 
+	private String curTime;
+
+//	@Column(name = "cur_date")
+//	private String curDate;
+//
+//	@Column(name = "cur_time")
+//	private String curTime;
+
+	public String getCurTime() {
+		return curTime;
+	}
+
+	public void setCurTime(String curTime) {
+		this.curTime = curTime;
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -34,7 +47,6 @@ public class StockPrice {
 	public void setId(long id) {
 		this.id = id;
 	}
-
 
 	public String getStockCd() {
 		return stockCd;
@@ -44,19 +56,12 @@ public class StockPrice {
 		this.stockCd = stockCd;
 	}
 
-	public String getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(String price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
-	public Timestamp getCurTime() {
-		return curTime;
-	}
-
-	public void setCurTime(Timestamp curTime) {
-		this.curTime = curTime;
-	}
 }

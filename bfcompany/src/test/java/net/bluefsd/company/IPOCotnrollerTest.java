@@ -24,28 +24,24 @@ import net.bluefsd.main.BaseTestController;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Import({ AppConfig.class })
-public class CompanyControllerTest extends BaseTestController {
-	static int userId = 0;
-
+public class IPOCotnrollerTest extends BaseTestController {
 	@Test
 	public void u_1_add() throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		ObjectMapper mapper = new ObjectMapper();
-		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/company/add");
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/ipo/add");
 		request.content(mapper.writeValueAsString(map)).header("Authorization", token)
 				.contentType(MediaType.APPLICATION_JSON_UTF8);
-		// UserManager.createUser(request);
-		// UserManager.createUser1(request);
-		// UserManager.createMentor(request);
-		CompanyManager.create_1(request);
+
+		IPOManager.create_1(request);
 		ResultActions matcher = this.mockMvc.perform(request).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 		matcher.andDo(MockMvcResultHandlers.print());
-		matcher.andExpect(jsonPath("$.companyCd").isString());
-		matcher.andExpect(jsonPath("$.ceoName").value("John"));
+		matcher.andExpect(jsonPath("$.id").isNumber());
+		matcher.andExpect(jsonPath("$.companyCd").value("01NEL"));
 		String responseStr = matcher.andReturn().getResponse().getContentAsString();
 		JSONObject object = (JSONObject) JSONObject.parseObject(responseStr);
-		userId = (Integer) object.get("ceoName");
+		int userId = (Integer) object.get("id");
 		printResponse(matcher);
 	}
 
@@ -53,33 +49,19 @@ public class CompanyControllerTest extends BaseTestController {
 	public void u_2_add() throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		ObjectMapper mapper = new ObjectMapper();
-		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/company/create");
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/ipo/add");
 		request.content(mapper.writeValueAsString(map)).header("Authorization", token)
 				.contentType(MediaType.APPLICATION_JSON_UTF8);
-		CompanyManager.create_2(request);
+
+		IPOManager.create_2(request);
 		ResultActions matcher = this.mockMvc.perform(request).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 		matcher.andDo(MockMvcResultHandlers.print());
-		matcher.andExpect(jsonPath("$.companyCd").isString());
-		matcher.andExpect(jsonPath("$.ceoName").value("John"));
+		matcher.andExpect(jsonPath("$.id").isNumber());
+		matcher.andExpect(jsonPath("$.companyCd").value("01YXL"));
 		String responseStr = matcher.andReturn().getResponse().getContentAsString();
 		JSONObject object = (JSONObject) JSONObject.parseObject(responseStr);
-		int userId = (Integer) object.get("companyCd");
+		int userId = (Integer) object.get("id");
 		printResponse(matcher);
 	}
-
-	@Test
-	public void u_4_update() throws Exception {
-		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/company/update");
-		ObjectMapper mapper = new ObjectMapper();
-		Map<String, Object> map = new HashMap<>();
-		request.content(mapper.writeValueAsString(map)).header("Authorization", token)
-				.contentType(MediaType.APPLICATION_JSON_UTF8).accept(MediaType.APPLICATION_JSON_UTF8);
-		CompanyManager.update(request, 1);
-		ResultActions matcher = this.mockMvc.perform(request).andExpect(status().isOk())
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
-		matcher.andDo(MockMvcResultHandlers.print());
-		matcher.andExpect(jsonPath("$.ceoName").value("John"));
-	}
-
 }

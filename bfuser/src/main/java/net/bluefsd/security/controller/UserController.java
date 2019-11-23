@@ -1,5 +1,6 @@
 package net.bluefsd.security.controller;
 
+import java.rmi.server.UID;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import net.bluefsd.comm.controller.BaseController;
 import net.bluefsd.entity.BFUser;
 import net.bluefsd.security.service.BFUserDetailsService;
+import net.bluefsd.security.service.MailService;
+import net.bluefsd.util.VerifyCodeUtil;
 
 @RestController
 @CrossOrigin
@@ -22,6 +25,9 @@ import net.bluefsd.security.service.BFUserDetailsService;
 public class UserController extends BaseController {
 	@Autowired
 	private BFUserDetailsService authService;
+
+	@Autowired
+	MailService mailService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String createToken(@RequestParam String username, @RequestParam String password)
@@ -48,4 +54,29 @@ public class UserController extends BaseController {
 		return composeReturnMap();
 	}
 
+	@RequestMapping(value = "/mail", method = RequestMethod.POST)
+	public String sendMail(BFUser user) {
+		mailService.sendMail(user);
+		return "ok";
+	}
+
+	@RequestMapping(value = "/activateduseraccount", method = RequestMethod.GET)
+	public String verify(String verifyCode) {
+		String userName = authService.verify(verifyCode);
+		if (userName != null) {
+			return "User " + userName + " complete verification successfully!";
+		} else {
+			return "Invalid verification link";
+		}
+	}
+
+	public static void main(String args[]) {
+
+		UID uid = new UID();
+		System.out.println(uid.toString());
+		String code = VerifyCodeUtil.generateVerifyCode(32);
+
+		System.out.println(code);
+
+	}
 }

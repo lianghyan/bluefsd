@@ -1,4 +1,4 @@
-package net.bluefsd.exchange;
+package net.bluefsd.upload;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 //@ComponentScan("net.fsd.model, net.fsd.*.service, net.fsd.*.controller, net.fsd.security, net.fsd.comm.log")
 @EntityScan("net.bluefsd.entity")
-@EnableJpaRepositories({"net.bluefsd.*.dao", })
+@EnableJpaRepositories("net.bluefsd.dao")
 //@EnableAspectJAutoProxy
 
 //@EnableJpaRepositories(basePackages = {"com.xx","com.yy"})
