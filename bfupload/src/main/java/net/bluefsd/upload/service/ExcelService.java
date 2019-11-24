@@ -67,7 +67,7 @@ public class ExcelService {
 			StockPrice stockPrice = new StockPrice();
 
 			String stockCd = row.getCell(0).getStringCellValue();
-			stockPrice.setStockCd(stockCd.trim());
+			stockPrice.setStockCd(stockCd.substring(0,6));
 
 			double price = row.getCell(2).getNumericCellValue();
 			stockPrice.setPrice(price);
@@ -77,7 +77,7 @@ public class ExcelService {
 
 			String strDate = dateFormat.format(date);
 			// 2019/6/8 10:30:00
-			String dateTime = strDate + " " + time;
+			String dateTime = strDate.trim() + " " + time.trim();
 			// System.out.println(r + ":" + dateTime);
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(date);

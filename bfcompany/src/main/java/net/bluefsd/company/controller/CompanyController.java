@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import net.bluefsd.comm.controller.BaseController;
 import net.bluefsd.company.service.CompanyService;
 import net.bluefsd.entity.Company;
-import net.bluefsd.entity.StockPrice;
 import net.bluefsd.model.CompanyDetails;
+import net.bluefsd.model.StockPriceDetails;
 
 @RestController
 @CrossOrigin
@@ -35,11 +35,8 @@ public class CompanyController extends BaseController {
 		return companyService.findCompanyDetail(compDetails);
 	}
 
+	@RequestMapping(value = { "/companydetail" }, method = RequestMethod.POST)
 	public CompanyDetails findCompanyDetail(Company compDetails) {
 		return companyService.findCompanyDetail(compDetails);
-	}
-
-	public List<StockPrice> findPrice(String companyCd, String from, String to, String type) {
-		return null;
 	}
 }

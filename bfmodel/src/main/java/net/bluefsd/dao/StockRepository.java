@@ -1,4 +1,4 @@
-package net.bluefsd.company.dao;
+package net.bluefsd.dao;
 
 import java.util.List;
 
@@ -17,7 +17,15 @@ public interface StockRepository extends JpaRepository<Stock, String> {
 	public void deleteByCompanyCd(@Param("companyCd") String companyCd);
 
 	@Transactional(readOnly = true)
-	@Query(value = "SELECT s FROM Stock s where companyCd=:companyCd")
-	public List<String> findByCompanyCd(@Param("companyCd") String companyCd);
+	@Query(value = "SELECT s FROM Stock s where companyCd=:companyCd and exchCd=:exchCd")
+	public List<Stock> findByCompanyCd(@Param("companyCd") String companyCd);
+
+	@Transactional(readOnly = true)
+	@Query(value = "SELECT s FROM Stock s where companyCd=:companyCd and exchCd=:exchCd")
+	public List<Stock> findByCompanyExch(@Param("companyCd") String companyCd, @Param("exchCd") String exchCd);
+
+//	@Transactional(readOnly = true)
+//	@Query(value = "SELECT s FROM Stock s where stockCd=:stockCd")
+//	public  Stock  findByStockCd(@Param("stockCd") String stockCd);
 
 }

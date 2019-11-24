@@ -2,26 +2,26 @@ package net.bluefsd.model;
 
 public class StockPriceDetails {
 
-	public String company_cd;
-	public String stock_cd;
-	String periodType;
-	String[] dates;
-	double[] values;
+	private String companyCd;
+	private String stockCd;
+	private String periodType;
+	private String[] dates;
+	private double[] values;
 
-	public String getCompany_cd() {
-		return company_cd;
+	public String getCompanyCd() {
+		return companyCd;
 	}
 
-	public void setCompany_cd(String company_cd) {
-		this.company_cd = company_cd;
+	public void setCompanyCd(String companyCd) {
+		this.companyCd = companyCd;
 	}
 
-	public String getStock_cd() {
-		return stock_cd;
+	public String getStockCd() {
+		return stockCd;
 	}
 
-	public void setStock_cd(String stock_cd) {
-		this.stock_cd = stock_cd;
+	public void setStockCd(String stockCd) {
+		this.stockCd = stockCd;
 	}
 
 	public String getPeriodType() {

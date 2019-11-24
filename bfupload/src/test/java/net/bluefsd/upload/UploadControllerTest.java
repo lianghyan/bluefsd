@@ -25,15 +25,15 @@ import net.bluefsd.main.BaseTestController;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Import({ AppConfig.class })
 public class UploadControllerTest extends BaseTestController {
-
-	public void add5() {
+	@Test
+	public void add5()  throws IOException{
 		String filePath = "C:\\lydoc\\FSD\\finalassess\\500112-5.xlsx";
-
+		testAdd(filePath);
 	}
 
 	@Test
 	public void add6() throws IOException {
-		String filePath = "C:\\lydoc\\FSD\\finalassess\\500112-7.xlsx";
+		String filePath = "C:\\lydoc\\FSD\\finalassess\\500112-6.xlsx";
 		testAdd(filePath);
 	}
 

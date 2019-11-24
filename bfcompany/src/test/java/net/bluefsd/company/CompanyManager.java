@@ -29,4 +29,20 @@ public class CompanyManager {
 		request.param("brief", "software company");
 
 	}
+
+	// (String[] companyCds, String from, String to, String periodType) {
+	public static void listPrice(MockHttpServletRequestBuilder request) {
+		request.param("stockCds", "500112");
+		request.param("from", "2019-05-12");
+		request.param("to", "2019-06-12");
+		// week, month, p6month
+		request.param("periodType", "week");
+	}
+
+	public static void createStock(MockHttpServletRequestBuilder request) {
+		request.param("stockCd", "500112");
+		request.param("companyCd", "neu");
+		request.param("exchCd", "NSE");
+
+	}
 }
