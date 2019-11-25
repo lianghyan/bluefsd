@@ -4,7 +4,15 @@ public class StockPriceDetail {
 
 	private String companyCd;
 	private String stockCd;
-	private String periodType;
+	private String intervalType;
+	public String getIntervalType() {
+		return intervalType;
+	}
+
+	public void setIntervalType(String intervalType) {
+		this.intervalType = intervalType;
+	}
+
 	private String[] dates;
 	private double[] values;
 
@@ -23,14 +31,8 @@ public class StockPriceDetail {
 	public void setStockCd(String stockCd) {
 		this.stockCd = stockCd;
 	}
-
-	public String getPeriodType() {
-		return periodType;
-	}
-
-	public void setPeriodType(String periodType) {
-		this.periodType = periodType;
-	}
+ 
+ 
 
 	public String[] getDates() {
 		return dates;

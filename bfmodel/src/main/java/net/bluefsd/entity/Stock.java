@@ -22,6 +22,17 @@ public class Stock {
 	@Column(name = "exch_cd", length=20)
 	private String exchCd;
 
+	@Column(name = "sector_cd", length=20)
+	private String sectorCd;
+
+	public String getSectorCd() {
+		return sectorCd;
+	}
+
+	public void setSectorCd(String sectorCd) {
+		this.sectorCd = sectorCd;
+	}
+
 	public String getCompanyCd() {
 		return companyCd;
 	}

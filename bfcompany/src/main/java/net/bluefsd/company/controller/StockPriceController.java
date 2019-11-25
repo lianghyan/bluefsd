@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import net.bluefsd.comm.controller.BaseController;
 import net.bluefsd.company.service.StockPriceService;
 import net.bluefsd.entity.Stock;
+import net.bluefsd.model.SectorPriceDetail;
 import net.bluefsd.model.StockPriceDetail;
 
 @RestController
@@ -22,9 +23,9 @@ public class StockPriceController extends BaseController {
 	StockPriceService stockPriceService;
 
 	@RequestMapping(value = { "/listpricedetail" }, method = RequestMethod.POST)
-	public Map<String, List<StockPriceDetail>> ListPriceDetails(String[] stockCds, String from, String to) {
+	public Map<String, List<StockPriceDetail>> ListStockPrice(String[] stockCds, String from, String to) {
 		try {
-			return stockPriceService.findPriceDetails(stockCds, from, to);
+			return stockPriceService.listStockPrice(stockCds, from, to);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -34,7 +35,37 @@ public class StockPriceController extends BaseController {
 	@RequestMapping(value = { "/pricedetail" }, method = RequestMethod.POST)
 	public Map<String, StockPriceDetail> findPriceDetail(String stockCd) {
 		try {
-			return stockPriceService.findPriceDetail(stockCd);
+			return stockPriceService.findStockPrice(stockCd);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@RequestMapping(value = { "/listsectorprice" }, method = RequestMethod.POST)
+	public Map<String, List<SectorPriceDetail>> ListSectorPrice(String[] sectorCds, String from, String to) {
+		try {
+			return stockPriceService.listSectorPrice(sectorCds, from, to);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@RequestMapping(value = { "/sectorprice" }, method = RequestMethod.POST)
+	public Map<String, SectorPriceDetail> findSecotrPrice(String sectorCd) {
+		try {
+			return stockPriceService.findSecotrPrice(sectorCd);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@RequestMapping(value = { "/stocksectorprice" }, method = RequestMethod.POST)
+	public Map<String, List<Object>> findStockSectorPrice(String stockCd, String from, String to) {
+		try {
+			return stockPriceService.findStockSectorPrice(stockCd, from, to);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

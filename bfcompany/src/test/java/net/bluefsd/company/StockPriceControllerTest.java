@@ -25,8 +25,8 @@ import net.bluefsd.main.BaseTestController;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Import({ AppConfig.class })
 public class StockPriceControllerTest extends BaseTestController {
-	//@Test
-	public void t_1_stock() throws Exception {
+	// @Test
+	public void t_1_add() throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		ObjectMapper mapper = new ObjectMapper();
 		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/stock/add");
@@ -44,8 +44,8 @@ public class StockPriceControllerTest extends BaseTestController {
 		printResponse(matcher);
 	}
 
-	@Test
-	public void t_2_stock() throws Exception {
+	// @Test
+	public void t_2_list() throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		ObjectMapper mapper = new ObjectMapper();
 		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/stock/listpricedetail");
@@ -62,15 +62,72 @@ public class StockPriceControllerTest extends BaseTestController {
 		int userId = (Integer) object.get("companyCd");
 		printResponse(matcher);
 	}
-	
-	//@Test
-	public void t_3_stock() throws Exception {
+
+	// @Test
+	public void t_3_find() throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		ObjectMapper mapper = new ObjectMapper();
 		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/stock/pricedetail");
 		request.content(mapper.writeValueAsString(map)).header("Authorization", token)
 				.contentType(MediaType.APPLICATION_JSON_UTF8);
 		CompanyManager.findPrice(request);
+		ResultActions matcher = this.mockMvc.perform(request).andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
+		matcher.andDo(MockMvcResultHandlers.print());
+		matcher.andExpect(jsonPath("$.companyCd").value("neu"));
+		matcher.andExpect(jsonPath("$.stockCd").value("500112"));
+		String responseStr = matcher.andReturn().getResponse().getContentAsString();
+		JSONObject object = (JSONObject) JSONObject.parseObject(responseStr);
+		int userId = (Integer) object.get("companyCd");
+		printResponse(matcher);
+	}
+
+	// @Test
+	public void t_4_find_sector() throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		ObjectMapper mapper = new ObjectMapper();
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/stock/sectorprice");
+		request.content(mapper.writeValueAsString(map)).header("Authorization", token)
+				.contentType(MediaType.APPLICATION_JSON_UTF8);
+		CompanyManager.findPrice_Sector(request);
+		ResultActions matcher = this.mockMvc.perform(request).andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
+		matcher.andDo(MockMvcResultHandlers.print());
+		matcher.andExpect(jsonPath("$.companyCd").value("neu"));
+		matcher.andExpect(jsonPath("$.stockCd").value("500112"));
+		String responseStr = matcher.andReturn().getResponse().getContentAsString();
+		JSONObject object = (JSONObject) JSONObject.parseObject(responseStr);
+		int userId = (Integer) object.get("companyCd");
+		printResponse(matcher);
+	}
+
+	// @Test
+	public void t_5_list_sector() throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		ObjectMapper mapper = new ObjectMapper();
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/stock/listsectorprice");
+		request.content(mapper.writeValueAsString(map)).header("Authorization", token)
+				.contentType(MediaType.APPLICATION_JSON_UTF8);
+		CompanyManager.listPrice_Sector(request);
+		ResultActions matcher = this.mockMvc.perform(request).andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
+		matcher.andDo(MockMvcResultHandlers.print());
+		matcher.andExpect(jsonPath("$.companyCd").value("neu"));
+		matcher.andExpect(jsonPath("$.stockCd").value("500112"));
+		String responseStr = matcher.andReturn().getResponse().getContentAsString();
+		JSONObject object = (JSONObject) JSONObject.parseObject(responseStr);
+		int userId = (Integer) object.get("companyCd");
+		printResponse(matcher);
+	}
+
+	@Test
+	public void t_6_find_stocksector() throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		ObjectMapper mapper = new ObjectMapper();
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/stock/stocksectorprice");
+		request.content(mapper.writeValueAsString(map)).header("Authorization", token)
+				.contentType(MediaType.APPLICATION_JSON_UTF8);
+		CompanyManager.findPrice_StockSector(request);
 		ResultActions matcher = this.mockMvc.perform(request).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 		matcher.andDo(MockMvcResultHandlers.print());

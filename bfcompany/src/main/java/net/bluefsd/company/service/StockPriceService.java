@@ -16,6 +16,7 @@ import net.bluefsd.dao.StockPriceRepository;
 import net.bluefsd.dao.StockRepository;
 import net.bluefsd.entity.Stock;
 import net.bluefsd.entity.StockPrice;
+import net.bluefsd.model.SectorPriceDetail;
 import net.bluefsd.model.StockPriceDetail;
 import net.bluefsd.util.FSDConstant;
 
@@ -34,7 +35,7 @@ public class StockPriceService {
 		return stockRepository.save(stock);
 	}
 
-	public Stock findStock(String companyCd, String exchangeCd) {
+	private Stock findStock(String companyCd, String exchangeCd) {
 		List<Stock> list = stockRepository.findByCompanyExch(companyCd, exchangeCd);
 		if (list.size() > 0) {
 			return list.get(0);
@@ -43,13 +44,13 @@ public class StockPriceService {
 		}
 	}
 
-	public Map<String, List<StockPriceDetail>> findPriceDetails(String[] stockCds, String from, String to)
+	public Map<String, List<StockPriceDetail>> listStockPrice(String[] stockCds, String from, String to)
 			throws ParseException {
 
-		List<StockPriceDetail> week = findPriceDetails(stockCds, from, to, FSDConstant.INTERVAL_WEEK);
-		List<StockPriceDetail> month = findPriceDetails(stockCds, from, to, FSDConstant.INTERVAL_MONTH);
-		List<StockPriceDetail> quarter = findPriceDetails(stockCds, from, to, FSDConstant.INTERVAL_QUARTER);
-		List<StockPriceDetail> year = findPriceDetails(stockCds, from, to, FSDConstant.INTERVAL_YEAR);
+		List<StockPriceDetail> week = listStockPriceDetails(stockCds, from, to, FSDConstant.INTERVAL_WEEK);
+		List<StockPriceDetail> month = listStockPriceDetails(stockCds, from, to, FSDConstant.INTERVAL_MONTH);
+		List<StockPriceDetail> quarter = listStockPriceDetails(stockCds, from, to, FSDConstant.INTERVAL_QUARTER);
+		List<StockPriceDetail> year = listStockPriceDetails(stockCds, from, to, FSDConstant.INTERVAL_YEAR);
 
 		HashMap<String, List<StockPriceDetail>> map = new HashMap<>();
 		map.put("weekList", week);
@@ -59,55 +60,52 @@ public class StockPriceService {
 		return map;
 	}
 
-	private List<StockPriceDetail> findPriceDetails(String[] stockCds, String from, String to, String intervalType)
+	private List<StockPriceDetail> listStockPriceDetails(String[] stockCds, String from, String to, String intervalType)
 			throws ParseException {
 		List<StockPriceDetail> detailList = new ArrayList<>();
 		if (stockCds != null) {
 			for (int i = 0; i < stockCds.length; i++) {
 				String stockCd = stockCds[i];
-				StockPriceDetail detail = findPrice(stockCd, from, to, intervalType);
+				StockPriceDetail detail = findStockPriceDetail(stockCd, from, to, intervalType);
 				detailList.add(detail);
 			}
 		}
 		return detailList;
 	}
 
-	private StockPriceDetail findPrice(String stockCd, String from, String to, String intervalType)
+	private StockPriceDetail findStockPriceDetail(String stockCd, String from, String to, String intervalType)
 			throws ParseException {
 		// type: week, month, year, ,
 		// Stock stock = stockRepository.findById(stockCd).get();
 		// detail.setCompanyCd(stock.getCompanyCd());
-		StockPriceDetail detail = new StockPriceDetail();
-		detail.setStockCd(stockCd);
 
 		Date oFrom = dateFormat.parse(from);
 		Date oTo = dateFormat.parse(to);
 		if (FSDConstant.INTERVAL_WEEK.equalsIgnoreCase(intervalType)) {
-			detail.setPeriodType(FSDConstant.INTERVAL_WEEK);
 			List<StockPrice> priceList = stockPriceRepository.findWeekByStockCd(stockCd, oFrom, oTo);
-			return composePriceDetails(priceList, detail);
+			return composeStockPriceDetails(priceList, stockCd, FSDConstant.INTERVAL_WEEK);
 		}
 		if (FSDConstant.INTERVAL_MONTH.equalsIgnoreCase(intervalType)) {
-			detail.setPeriodType(FSDConstant.INTERVAL_MONTH);
 			List<StockPrice> priceList = stockPriceRepository.findMonthByStockCd(stockCd, oFrom, oTo);
-			return composePriceDetails(priceList, detail);
+			return composeStockPriceDetails(priceList, stockCd, FSDConstant.INTERVAL_MONTH);
 		}
 		if (FSDConstant.INTERVAL_QUARTER.equalsIgnoreCase(intervalType)) {
-			detail.setPeriodType(FSDConstant.INTERVAL_QUARTER);
 			List<StockPrice> priceList = stockPriceRepository.findQuarterByStockCd(stockCd, oFrom, oTo);
-			return composePriceDetails(priceList, detail);
+			return composeStockPriceDetails(priceList, stockCd, FSDConstant.INTERVAL_QUARTER);
 		}
 		if (FSDConstant.INTERVAL_YEAR.equalsIgnoreCase(intervalType)) {
-			detail.setPeriodType(FSDConstant.INTERVAL_YEAR);
 			List<StockPrice> priceList = stockPriceRepository.findYearByStockCd(stockCd, oFrom, oTo);
-			return composePriceDetails(priceList, detail);
+			return composeStockPriceDetails(priceList, stockCd, FSDConstant.INTERVAL_YEAR);
 		}
 
 		return null;
 	}
 
-	private StockPriceDetail composePriceDetails(List<StockPrice> priceList, StockPriceDetail detail)
+	private StockPriceDetail composeStockPriceDetails(List<StockPrice> priceList, String stockCd, String intervalType)
 			throws ParseException {
+		StockPriceDetail detail = new StockPriceDetail();
+		detail.setStockCd(stockCd);
+		detail.setIntervalType(intervalType);
 		String[] dates = new String[priceList.size()];
 		double[] values = new double[priceList.size()];
 		for (int i = 0; i < priceList.size(); i++) {
@@ -123,11 +121,11 @@ public class StockPriceService {
 		return detail;
 	}
 
-	public Map<String, StockPriceDetail> findPriceDetail(String stockCd) throws ParseException {
-		StockPriceDetail week = findPriceDetail(stockCd, FSDConstant.INTERVAL_WEEK);
-		StockPriceDetail month = findPriceDetail(stockCd, FSDConstant.INTERVAL_MONTH);
-		StockPriceDetail quarter = findPriceDetail(stockCd, FSDConstant.INTERVAL_QUARTER);
-		StockPriceDetail year = findPriceDetail(stockCd, FSDConstant.INTERVAL_YEAR);
+	public Map<String, StockPriceDetail> findStockPrice(String stockCd) throws ParseException {
+		StockPriceDetail week = findStockPriceDetail(stockCd, FSDConstant.INTERVAL_WEEK);
+		StockPriceDetail month = findStockPriceDetail(stockCd, FSDConstant.INTERVAL_MONTH);
+		StockPriceDetail quarter = findStockPriceDetail(stockCd, FSDConstant.INTERVAL_QUARTER);
+		StockPriceDetail year = findStockPriceDetail(stockCd, FSDConstant.INTERVAL_YEAR);
 
 		HashMap<String, StockPriceDetail> map = new HashMap<>();
 		map.put("weekList", week);
@@ -138,30 +136,153 @@ public class StockPriceService {
 
 	}
 
-	private StockPriceDetail findPriceDetail(String stockCd, String intervalType) throws ParseException {
-		StockPriceDetail detail = new StockPriceDetail();
-		detail.setStockCd(stockCd);
+	private StockPriceDetail findStockPriceDetail(String stockCd, String intervalType) throws ParseException {
+
 		if (FSDConstant.INTERVAL_WEEK.equalsIgnoreCase(intervalType)) {
-			detail.setPeriodType(FSDConstant.INTERVAL_WEEK);
 			List<StockPrice> priceList = stockPriceRepository.findWeekByStockCd(stockCd);
-			return composePriceDetails(priceList, detail);
+			return composeStockPriceDetails(priceList, stockCd, FSDConstant.INTERVAL_WEEK);
 		}
 		if (FSDConstant.INTERVAL_MONTH.equalsIgnoreCase(intervalType)) {
-			detail.setPeriodType(FSDConstant.INTERVAL_MONTH);
 			List<StockPrice> priceList = stockPriceRepository.findMonthByStockCd(stockCd);
-			return composePriceDetails(priceList, detail);
+			return composeStockPriceDetails(priceList, stockCd, FSDConstant.INTERVAL_MONTH);
 		}
 		if (FSDConstant.INTERVAL_QUARTER.equalsIgnoreCase(intervalType)) {
-			detail.setPeriodType(FSDConstant.INTERVAL_QUARTER);
 			List<StockPrice> priceList = stockPriceRepository.findQuarterByStockCd(stockCd);
-			return composePriceDetails(priceList, detail);
+			return composeStockPriceDetails(priceList, stockCd, FSDConstant.INTERVAL_QUARTER);
 		}
 		if (FSDConstant.INTERVAL_YEAR.equalsIgnoreCase(intervalType)) {
-			detail.setPeriodType(FSDConstant.INTERVAL_YEAR);
 			List<StockPrice> priceList = stockPriceRepository.findYearByStockCd(stockCd);
-			return composePriceDetails(priceList, detail);
+			return composeStockPriceDetails(priceList, stockCd, FSDConstant.INTERVAL_YEAR);
 		}
 
 		return null;
+	}
+
+	public Map<String, SectorPriceDetail> findSecotrPrice(String sectorCd) throws ParseException {
+
+		SectorPriceDetail week = composeSectorPriceDetail(stockPriceRepository.findWeekBySectorCd(sectorCd), sectorCd,
+				FSDConstant.INTERVAL_WEEK);
+		SectorPriceDetail month = composeSectorPriceDetail(stockPriceRepository.findMonthBySectorCd(sectorCd), sectorCd,
+				FSDConstant.INTERVAL_MONTH);
+		SectorPriceDetail quarter = composeSectorPriceDetail(stockPriceRepository.findQuarterBySectorCd(sectorCd),
+				sectorCd, FSDConstant.INTERVAL_QUARTER);
+		SectorPriceDetail year = composeSectorPriceDetail(stockPriceRepository.findYearBySectorCd(sectorCd), sectorCd,
+				FSDConstant.INTERVAL_YEAR);
+
+		HashMap<String, SectorPriceDetail> map = new HashMap<>();
+		map.put("weekList", week);
+		map.put("monthList", month);
+		map.put("quarterList", quarter);
+		map.put("yearList", year);
+		return map;
+	}
+
+	private SectorPriceDetail composeSectorPriceDetail(List<Object[]> priceList, String sectorCd, String internalType) {
+		SectorPriceDetail price = new SectorPriceDetail();
+		price.setSectorCd(sectorCd);
+		price.setIntervalType(internalType);
+
+		String[] dates = new String[priceList.size()];
+		double[] values = new double[priceList.size()];
+		for (int i = 0; i < priceList.size(); i++) {
+			Object[] objs = priceList.get(i);
+			values[i] = (Double) objs[0];
+			dates[i] = (String) objs[1];
+
+		}
+		price.setDates(dates);
+		price.setValues(values);
+		return price;
+	}
+
+	public Map<String, List<SectorPriceDetail>> listSectorPrice(String[] SectorCds, String from, String to)
+			throws ParseException {
+		Date oFrom = dateFormat.parse(from);
+		Date oTo = dateFormat.parse(to);
+
+		List<SectorPriceDetail> weekList = new ArrayList<>();
+		List<SectorPriceDetail> monthList = new ArrayList<>();
+		List<SectorPriceDetail> quarterList = new ArrayList<>();
+		List<SectorPriceDetail> yearList = new ArrayList<>();
+		if (SectorCds != null) {
+			for (int i = 0; i < SectorCds.length; i++) {
+				String sectorCd = SectorCds[i];
+				SectorPriceDetail week = composeSectorPriceDetail(
+						stockPriceRepository.findWeekBySectorCd(sectorCd, oFrom, oTo), sectorCd,
+						FSDConstant.INTERVAL_WEEK);
+				SectorPriceDetail month = composeSectorPriceDetail(
+						stockPriceRepository.findMonthBySectorCd(sectorCd, oFrom, oTo), sectorCd,
+						FSDConstant.INTERVAL_MONTH);
+				SectorPriceDetail quarter = composeSectorPriceDetail(
+						stockPriceRepository.findQuarterBySectorCd(sectorCd, oFrom, oTo), sectorCd,
+						FSDConstant.INTERVAL_QUARTER);
+				SectorPriceDetail year = composeSectorPriceDetail(
+						stockPriceRepository.findYearBySectorCd(sectorCd, oFrom, oTo), sectorCd,
+						FSDConstant.INTERVAL_YEAR);
+
+				weekList.add(week);
+				monthList.add(month);
+				quarterList.add(quarter);
+				yearList.add(year);
+			}
+		}
+
+		HashMap<String, List<SectorPriceDetail>> map = new HashMap<>();
+		map.put("weekList", weekList);
+		map.put("monthList", monthList);
+		map.put("quarterList", quarterList);
+		map.put("yearList", yearList);
+		return map;
+	}
+
+	public Map<String, List<Object>> findStockSectorPrice(String stockCd, String from, String to)
+			throws ParseException {
+		Stock stock = stockRepository.findById(stockCd).get();
+		String sectorCd = stock.getSectorCd();
+		
+		Date oFrom = dateFormat.parse(from);
+		Date oTo = dateFormat.parse(to);
+
+		List<Object> weekList = new ArrayList<>();
+		List<Object> monthList = new ArrayList<>();
+		List<Object> quarterList = new ArrayList<>();
+		List<Object> yearList = new ArrayList<>();
+
+		StockPriceDetail stockWeek = composeStockPriceDetails(
+				stockPriceRepository.findWeekByStockCd(stockCd, oFrom, oTo), stockCd, FSDConstant.INTERVAL_WEEK);
+		StockPriceDetail stockMonth = composeStockPriceDetails(
+				stockPriceRepository.findMonthByStockCd(sectorCd, oFrom, oTo), stockCd, FSDConstant.INTERVAL_MONTH);
+		StockPriceDetail stockQuarter = composeStockPriceDetails(
+				stockPriceRepository.findQuarterByStockCd(sectorCd, oFrom, oTo), stockCd,
+				FSDConstant.INTERVAL_QUARTER);
+		StockPriceDetail stockYear = composeStockPriceDetails(
+				stockPriceRepository.findYearByStockCd(sectorCd, oFrom, oTo), stockCd, FSDConstant.INTERVAL_YEAR);
+
+		weekList.add(stockWeek);
+		monthList.add(stockMonth);
+		quarterList.add(stockQuarter);
+		yearList.add(stockYear);
+
+		SectorPriceDetail week = composeSectorPriceDetail(stockPriceRepository.findWeekBySectorCd(sectorCd, oFrom, oTo),
+				sectorCd, FSDConstant.INTERVAL_WEEK);
+		SectorPriceDetail month = composeSectorPriceDetail(
+				stockPriceRepository.findMonthBySectorCd(sectorCd, oFrom, oTo), sectorCd, FSDConstant.INTERVAL_MONTH);
+		SectorPriceDetail quarter = composeSectorPriceDetail(
+				stockPriceRepository.findQuarterBySectorCd(sectorCd, oFrom, oTo), sectorCd,
+				FSDConstant.INTERVAL_QUARTER);
+		SectorPriceDetail year = composeSectorPriceDetail(stockPriceRepository.findYearBySectorCd(sectorCd, oFrom, oTo),
+				sectorCd, FSDConstant.INTERVAL_YEAR);
+
+		weekList.add(week);
+		monthList.add(month);
+		quarterList.add(quarter);
+		yearList.add(year);
+
+		HashMap<String, List<Object>> map = new HashMap<>();
+		map.put("weekList", weekList);
+		map.put("monthList", monthList);
+		map.put("quarterList", quarterList);
+		map.put("yearList", yearList);
+		return map;
 	}
 }

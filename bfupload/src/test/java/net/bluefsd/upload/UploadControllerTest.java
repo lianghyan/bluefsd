@@ -45,11 +45,24 @@ public class UploadControllerTest extends BaseTestController {
 		testAdd(filePath);
 	}
 
-	@Test
+	//@Test
 	public void add66() throws IOException {
 		String filePath = "C:\\lydoc\\FSD\\finalassess\\600116-6.xlsx";
 		testAdd(filePath);
 	}
+	
+	@Test
+	public void add865()  throws IOException{
+		String filePath = "C:\\lydoc\\FSD\\finalassess\\800118-5.xlsx";
+		testAdd(filePath);
+	}
+
+	//@Test
+	public void add86() throws IOException {
+		String filePath = "C:\\lydoc\\FSD\\finalassess\\800118-6.xlsx";
+		testAdd(filePath);
+	}
+	
 	public void testAdd(String filePath) throws IOException {
 
 		// String filePath = "C:\\lydoc\\FSD\\finalassess\\500112-5.xlsx";
