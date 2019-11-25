@@ -32,13 +32,19 @@ public class CompanyManager {
 
 	// (String[] companyCds, String from, String to, String periodType) {
 	public static void listPrice(MockHttpServletRequestBuilder request) {
-		request.param("stockCds", "500112");
+		request.param("stockCds", "500112", "600116");
 		request.param("from", "2019-05-12");
 		request.param("to", "2019-06-12");
 		// week, month, p6month
-		request.param("periodType", "week");
+		//request.param("intervalType", "week");
 	}
 
+	// (String[] companyCds, String from, String to, String periodType) {
+	public static void findPrice(MockHttpServletRequestBuilder request) {
+		request.param("stockCd", "500112"); 
+		// week, month, p6month
+		//request.param("intervalType", "week");
+	}
 	public static void createStock(MockHttpServletRequestBuilder request) {
 		request.param("stockCd", "500112");
 		request.param("companyCd", "neu");

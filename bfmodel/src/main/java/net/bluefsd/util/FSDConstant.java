@@ -1,9 +1,9 @@
 package net.bluefsd.util;
 
 public class FSDConstant {
-	public static String PERIOD_WEEK = "week";
-	public static String PERIOD_MONTH = "month";
-	public static String PERIOD_MONTH6 = "month6";
-	public static String PERIOD_YEAR = "year";
+	public static String INTERVAL_WEEK = "week";
+	public static String INTERVAL_MONTH = "month";
+	public static String INTERVAL_QUARTER = "quarter";
+	public static String INTERVAL_YEAR = "year";
 
 }

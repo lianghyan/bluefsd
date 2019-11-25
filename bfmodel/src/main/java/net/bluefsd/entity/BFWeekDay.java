@@ -10,6 +10,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "bfweekday")
 @org.hibernate.annotations.Proxy(lazy = false)
-public class BFWeekDay extends BFPeriodDay {
+public class BFWeekDay extends BFInterval {
  	
 }

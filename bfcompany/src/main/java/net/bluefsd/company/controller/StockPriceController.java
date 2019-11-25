@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import net.bluefsd.comm.controller.BaseController;
 import net.bluefsd.company.service.StockPriceService;
 import net.bluefsd.entity.Stock;
-import net.bluefsd.model.StockPriceDetails;
+import net.bluefsd.model.StockPriceDetail;
 
 @RestController
 @CrossOrigin
@@ -21,10 +21,20 @@ public class StockPriceController extends BaseController {
 	@Autowired
 	StockPriceService stockPriceService;
 
-	@RequestMapping(value = { "/pricedetails" }, method = RequestMethod.POST)
-	public List<StockPriceDetails> findPriceDetails(String[] stockCds, String from, String to, String periodType) {
+	@RequestMapping(value = { "/listpricedetail" }, method = RequestMethod.POST)
+	public Map<String, List<StockPriceDetail>> ListPriceDetails(String[] stockCds, String from, String to) {
 		try {
-			return stockPriceService.findPriceDetails(stockCds, from, to, periodType);
+			return stockPriceService.findPriceDetails(stockCds, from, to);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@RequestMapping(value = { "/pricedetail" }, method = RequestMethod.POST)
+	public Map<String, StockPriceDetail> findPriceDetail(String stockCd) {
+		try {
+			return stockPriceService.findPriceDetail(stockCd);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

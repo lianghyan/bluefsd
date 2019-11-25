@@ -1,6 +1,6 @@
 package net.bluefsd.model;
 
-public class StockPriceDetails {
+public class StockPriceDetail {
 
 	private String companyCd;
 	private String stockCd;

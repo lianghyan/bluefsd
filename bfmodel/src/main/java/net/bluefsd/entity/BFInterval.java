@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public class BFPeriodDay {
+public class BFInterval {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

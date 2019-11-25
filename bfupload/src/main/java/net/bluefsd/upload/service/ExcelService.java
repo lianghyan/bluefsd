@@ -59,7 +59,7 @@ public class ExcelService {
 		}
 		Sheet sheet = wb.getSheetAt(0);
 
-		for (int r = 1; r < sheet.getLastRowNum() - 1; r++) {
+		for (int r = 1; r <= sheet.getLastRowNum(); r++) {
 			Row row = sheet.getRow(r);
 			if (row == null) {
 				continue;

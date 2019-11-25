@@ -12,7 +12,7 @@ import net.bluefsd.comm.controller.BaseController;
 import net.bluefsd.company.service.CompanyService;
 import net.bluefsd.entity.Company;
 import net.bluefsd.model.CompanyDetails;
-import net.bluefsd.model.StockPriceDetails;
+import net.bluefsd.model.StockPriceDetail;
 
 @RestController
 @CrossOrigin
