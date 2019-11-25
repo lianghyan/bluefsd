@@ -44,7 +44,7 @@ public class StockPriceControllerTest extends BaseTestController {
 		printResponse(matcher);
 	}
 
-	// @Test
+	 //@Test
 	public void t_2_list() throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		ObjectMapper mapper = new ObjectMapper();

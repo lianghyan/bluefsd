@@ -250,13 +250,14 @@ public class StockPriceService {
 
 		StockPriceDetail stockWeek = composeStockPriceDetails(
 				stockPriceRepository.findWeekByStockCd(stockCd, oFrom, oTo), stockCd, FSDConstant.INTERVAL_WEEK);
+		 
 		StockPriceDetail stockMonth = composeStockPriceDetails(
-				stockPriceRepository.findMonthByStockCd(sectorCd, oFrom, oTo), stockCd, FSDConstant.INTERVAL_MONTH);
+				stockPriceRepository.findMonthByStockCd(stockCd, oFrom, oTo), stockCd, FSDConstant.INTERVAL_MONTH);
 		StockPriceDetail stockQuarter = composeStockPriceDetails(
-				stockPriceRepository.findQuarterByStockCd(sectorCd, oFrom, oTo), stockCd,
+				stockPriceRepository.findQuarterByStockCd(stockCd, oFrom, oTo), stockCd,
 				FSDConstant.INTERVAL_QUARTER);
 		StockPriceDetail stockYear = composeStockPriceDetails(
-				stockPriceRepository.findYearByStockCd(sectorCd, oFrom, oTo), stockCd, FSDConstant.INTERVAL_YEAR);
+				stockPriceRepository.findYearByStockCd(stockCd, oFrom, oTo), stockCd, FSDConstant.INTERVAL_YEAR);
 
 		weekList.add(stockWeek);
 		monthList.add(stockMonth);

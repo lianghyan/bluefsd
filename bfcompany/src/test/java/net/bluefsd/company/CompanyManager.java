@@ -36,7 +36,7 @@ public class CompanyManager {
 	public static void listPrice(MockHttpServletRequestBuilder request) {
 		request.param("stockCds", "500112", "600116");
 		request.param("from", "2019-05-12");
-		request.param("to", "2019-06-12");
+		request.param("to", "2019-07-12");
 		// week, month, p6month
 		// request.param("intervalType", "week");
 	}
@@ -67,7 +67,7 @@ public class CompanyManager {
 	public static void findPrice_StockSector(MockHttpServletRequestBuilder request) {
 		request.param("stockCd", "500112");
 		request.param("from", "2019-05-12");
-		request.param("to", "2019-06-12");
+		request.param("to", "2019-07-12");
 
 	}
 
