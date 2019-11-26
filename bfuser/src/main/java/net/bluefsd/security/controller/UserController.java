@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,9 +31,33 @@ public class UserController extends BaseController {
 	MailService mailService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String createToken(@RequestParam String username, @RequestParam String password)
+	public Map createToken(@RequestBody BFUser u)
 			throws AuthenticationException {
-		return authService.login(username, password);
+		try {
+			String token = authService.login(u.getUserName(), u.getPassword());
+			return composeReturnMap("token", token);
+		} catch (Exception e) {
+			String msg = e.getMessage();
+			return composeErrorMap(msg);
+		}
+	}
+
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	public Map createAccount(@RequestBody BFUser u) throws JsonProcessingException {
+		if (u.getUserName() == null || u.getPassword() == null) {
+			return composeErrorMap("user name or password is null!");
+		}
+		try {
+			BFUser user = authService.createAccount(u);
+			Map map = composeReturnMap("Account is saved successfully!");
+			map.put("id", user.getId());
+			return map;
+
+		} catch (Exception ex) {
+			String msg = ex.getMessage();
+			return composeErrorMap(msg);
+		}
+
 	}
 
 	@RequestMapping(value = "/canaccess", method = RequestMethod.POST)
@@ -40,33 +65,28 @@ public class UserController extends BaseController {
 		return true;
 	}
 
-	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public Map createAccount(BFUser u) throws JsonProcessingException {
-		BFUser user = authService.createAccount(u);
-		Map map = composeReturnMap();
-		map.put("id", user.getId());
-		return map;
-	}
-
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public Map updateProfile(BFUser u) throws JsonProcessingException {
-		authService.updateProfile(u);
+	public Map updateProfile(@RequestBody BFUser u) throws JsonProcessingException {
+		authService.saveOrUpdateProfile(u);
 		return composeReturnMap();
 	}
 
 	@RequestMapping(value = "/mail", method = RequestMethod.POST)
-	public String sendMail(BFUser user) {
-		mailService.sendMail(user);
-		return "ok";
+	public Map sendMail(BFUser u) {
+		authService.saveOrUpdateProfile(u);
+		mailService.sendMail(u);
+		return composeReturnMap();
+
 	}
 
-	@RequestMapping(value = "/activateduseraccount", method = RequestMethod.GET)
-	public String verify(String verifyCode) {
+	@RequestMapping(value = "/activate", method = RequestMethod.GET)
+	public Map activate(String verifyCode) {
 		String userName = authService.verify(verifyCode);
 		if (userName != null) {
-			return "User " + userName + " complete verification successfully!";
+			return composeReturnMap(
+					"User " + userName + " complete verification successfully! You can signin with your account now.");
 		} else {
-			return "Invalid verification link";
+			return composeErrorMap("Invalid verification link");
 		}
 	}
 

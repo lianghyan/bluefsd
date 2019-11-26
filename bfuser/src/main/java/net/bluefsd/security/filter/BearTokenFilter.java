@@ -3,8 +3,11 @@ package net.bluefsd.security.filter;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -32,15 +35,25 @@ public class BearTokenFilter extends OncePerRequestFilter {
 	@Autowired
 	private BearTokenUtil jwtTokenUtil;
 
-	public static final String BEAR_TOKEN = "Bearer";
-	public static final String HEADER_AUTH = "Authorization";
-	public static String loginPath = "/auth/login";
-	public static String logoutPath = "/auth/logout";
-	public static String tokenPath = "/auth/allowaccess";
+	public final static String HEADER_AUTH = "Authorization";
+	public final static String loginPath = "/user/login";
+	public final static String logoutPath = "/user/logout";
+	public final static String userCreate = "/user/create";
+	public final static String userMail = "/user/mail";
+	public final static String userActivate = "/user/activate";
+
+	public final static String tokenPath = "/user/allowaccess";
+	public final static String userUpdate = "/user/update";
+
+	public final static String urlPattern = "/user/";
 
 	private boolean needValidate(HttpServletRequest request) {
 		String url = request.getRequestURL().toString();
-		if (url.endsWith(loginPath) || url.endsWith(logoutPath)) {
+		if (url.endsWith(tokenPath) || url.endsWith(userUpdate)) {
+			return false;
+		}
+
+		if (url.indexOf(urlPattern) >= 0) {
 			return true;
 		} else {
 			return false;
@@ -51,6 +64,11 @@ public class BearTokenFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
 
+		Enumeration names = request.getParameterNames();
+		while (names.hasMoreElements()) {
+			String name = (String) names.nextElement();
+			System.out.print("----" + name + ":" + request.getParameter(name));
+		}
 		if (!needValidate(request)) {
 			String reqHeader = request.getHeader(HEADER_AUTH);
 			String msg = null;
@@ -60,13 +78,13 @@ public class BearTokenFilter extends OncePerRequestFilter {
 				return;
 			}
 
-			if (!reqHeader.startsWith(BEAR_TOKEN)) {
+			if (!reqHeader.startsWith(BearTokenUtil.BEAR_TOKEN)) {
 				msg = "Token type is not matched!";
 				composeResponse(request, response, msg);
 				return;
 			}
 
-			final String authToken = reqHeader.substring(BEAR_TOKEN.length());
+			final String authToken = reqHeader.substring(BearTokenUtil.BEAR_TOKEN.length());
 			String username = null;
 			try {
 				username = jwtTokenUtil.getUserNameFromToken(authToken);
@@ -119,5 +137,12 @@ public class BearTokenFilter extends OncePerRequestFilter {
 			map.put("path", request.getRequestURL().toString());
 			response.getWriter().write(JSON.toJSONString(map));
 		}
+	}
+
+	public static void main(String[] args) {
+		String exp = "/user/";
+		boolean r = userCreate.indexOf(exp) >= 0;
+		boolean isMatch = Pattern.matches(exp, userCreate);
+		System.out.println(r + "-" + isMatch);
 	}
 }

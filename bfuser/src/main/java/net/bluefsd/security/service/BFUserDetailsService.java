@@ -53,22 +53,36 @@ public class BFUserDetailsService implements UserDetailsService {
 		return u;
 	}
 
-	public String login(String username, String password) {
+	public String login(String username, String password) throws Exception {
 //		UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken(username, password);
 //		final Authentication authentication = authenticationManager.authenticate(upToken);
 //		SecurityContextHolder.getContext().setAuthentication(authentication);
+		if (username == null || password == null) {
+			throw new Exception("User name or password is invalid!");
+		}
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		final UserDetails userDetails = loadUserByUsername(username);
-		final String token = jwtTokenUtil.generateToken(userDetails);
-		return token;
+		if (userDetails == null) {
+			throw new Exception("Account doesn't exist!");
+		}
+		String encodedPassword = userDetails.getPassword();
+
+		boolean matched = encoder.matches(password, encodedPassword);
+		if (matched) {
+			final String token = jwtTokenUtil.generateToken(userDetails);
+			return token;
+		} else {
+			throw new Exception("Password is incorrect!");
+		}
 	}
 
 	/*
 	 * 
 	 */
-	public BFUser createAccount(BFUser userToAdd) {
+	public BFUser createAccount(BFUser userToAdd) throws Exception {
 		final String username = userToAdd.getUserName();
 		if (userRepository.findUserByName(username) != null) {
-			return null;
+			throw new Exception("User " + username + " already exists!");
 		}
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		final String rawPassword = userToAdd.getPassword();
@@ -78,7 +92,7 @@ public class BFUserDetailsService implements UserDetailsService {
 		return userRepository.save(userToAdd);
 	}
 
-	public void updateProfile(BFUser u) {
+	public void saveOrUpdateProfile(BFUser u) {
 		userRepository.save(u);
 	}
 

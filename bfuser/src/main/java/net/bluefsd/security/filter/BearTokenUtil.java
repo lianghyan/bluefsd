@@ -20,6 +20,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class BearTokenUtil implements Serializable {
 
 	private static final long serialVersionUID = 1;
+	public static final String BEAR_TOKEN = "Bearer ";
 
 	@Value("${jwt.secret}")
 	private String secret;
@@ -27,14 +28,13 @@ public class BearTokenUtil implements Serializable {
 	@Value("${jwt.expiration}")
 	private Long expiration;
 
- 
 	public String generateToken(UserDetails userDetails) {
 		Date createTime = new Date();
 		Date expiredTime = new Date(createTime.getTime() + expiration * 1000);
 		Map<String, Object> claims = new HashMap<>();
 		String token = Jwts.builder().setClaims(claims).setSubject(userDetails.getUsername()).setIssuedAt(createTime)
 				.setExpiration(expiredTime).signWith(SignatureAlgorithm.HS512, secret).compact();
-		return token;
+		return BEAR_TOKEN + token;
 	}
 
 	public Boolean isTokenExpired(String token) {
@@ -54,14 +54,14 @@ public class BearTokenUtil implements Serializable {
 		return refToken;
 	}
 
-	public Boolean validateToken(String token, UserDetails userDetails) throws Exception{
+	public Boolean validateToken(String token, UserDetails userDetails) throws Exception {
 		User user = (User) userDetails;
 		String userName = getUserNameFromToken(token);
 		return (userName.equals(user.getUsername()) && !isTokenExpired(token));
 	}
 
-	public String getUserNameFromToken(String token) throws Exception{
-		
+	public String getUserNameFromToken(String token) throws Exception {
+
 		Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
 		String userName = claims.getSubject();
 		return userName;

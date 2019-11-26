@@ -86,14 +86,14 @@ public class UserControllerTest extends BaseTestController {
 		matcher.andExpect(jsonPath("$.ret").value("success"));
 	}
 	
-	//@Test
+	@Test
 	public void login() throws Exception {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		String rawPassword = "111111";
 		String enPwd = encoder.encode(rawPassword);
 		
 		ResultActions matcher = this.mockMvc
-				.perform(post("/user/login").param("username", "usky").param("password", enPwd)
+				.perform(post("/user/login").param("username", "usky").param("password", rawPassword)
 						.accept(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 		matcher.andDo(MockMvcResultHandlers.print());
@@ -117,7 +117,7 @@ public class UserControllerTest extends BaseTestController {
 		matcher.andDo(MockMvcResultHandlers.print());
 		// matcher.andExpect(jsonPath("$.id").value(2));
 	}
-	@Test
+	//@Test
 	public void sendMail() throws Exception {
 		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/user/mail");
 		ObjectMapper mapper = new ObjectMapper();
