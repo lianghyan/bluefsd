@@ -19,10 +19,26 @@ public interface CompanyRepository extends JpaRepository<Company, String> {
 	public List<Company> listCompany();
 
 	@Transactional(readOnly = true)
-	@Query(value = "SELECT u FROM Company u WHERE companyName like:input or companyCd like:input")
-	public List<Company> findMatchedCompany(@Param("input") String input);
+	@Query(value = "SELECT u.companyName FROM Company u WHERE companyName like %:input% or companyCd like %:input%")
+	public List<String> findMatchedCompanyName(@Param("input") String input);
 
 	@Transactional(readOnly = true)
 	@Query(value = "SELECT u FROM Company u WHERE companyCd=:companyCd")
 	public Company findCompanyByCd(@Param("companyCd") String companyCd);
+
+	@Transactional(readOnly = true)
+	@Query(value = "select c.companyCd, c.companyName, c.ceoName, c.exchCd, e.exchName, c.director, c.brief, c.sectorCd, s.sectorName , st.stockCd "
+			+ "from Company c, Sector s, Exchange e , Stock st where c.companyCd=:companyCd and c.sectorCd=s.sectorCd and c.exchCd=e.exchCd and st.companyCd=c.companyCd")
+	public List<Object[]> findCompanyDetailByCd(@Param("companyCd") String companyCd);
+
+	@Transactional(readOnly = true)
+	@Query(value = "select c.companyCd, c.companyName, c.ceoName, c.exchCd, e.exchName, c.director, c.brief, c.sectorCd, s.sectorName , st.stockCd "
+			+ "from Company c, Sector s, Exchange e, Stock st where c.sectorCd=s.sectorCd and c.exchCd=e.exchCd and st.companyCd=c.companyCd")
+	public List<Object[]> listCompanyDetail();
+
+	@Transactional(readOnly = true)
+	@Query(value = "select c.companyCd, c.companyName, c.ceoName, c.exchCd, e.exchName, c.director, c.brief, c.sectorCd, s.sectorName , st.stockCd "
+			+ "from Company c, Sector s, Exchange e, Stock st where ( c.companyName=:companyName ) and c.sectorCd=s.sectorCd and c.exchCd=e.exchCd and st.companyCd=c.companyCd")
+	public List<Object[]> findCompanyDetailByName(String companyName);
+
 }

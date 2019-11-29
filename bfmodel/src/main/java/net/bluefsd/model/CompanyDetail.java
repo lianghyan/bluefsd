@@ -2,7 +2,7 @@ package net.bluefsd.model;
 
 import net.bluefsd.entity.Stock;
 
-public class CompanyDetails {
+public class CompanyDetail {
 	private String companyCd;
 	private String companyName;
 	private String ceoName;

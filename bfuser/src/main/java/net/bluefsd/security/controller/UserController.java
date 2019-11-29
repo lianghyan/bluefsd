@@ -36,8 +36,8 @@ public class UserController extends BaseController {
 		try {
 			String token = authService.login(u.getUserName(), u.getPassword());
 			return composeReturnMap("token", token);
-		} catch (Exception e) {
-			String msg = e.getMessage();
+		} catch (Exception ex) {
+			String msg = ex.getMessage();
 			return composeErrorMap(msg);
 		}
 	}
