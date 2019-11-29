@@ -38,7 +38,7 @@ public interface CompanyRepository extends JpaRepository<Company, String> {
 
 	@Transactional(readOnly = true)
 	@Query(value = "select c.companyCd, c.companyName, c.ceoName, c.exchCd, e.exchName, c.director, c.brief, c.sectorCd, s.sectorName , st.stockCd "
-			+ "from Company c, Sector s, Exchange e, Stock st where ( c.companyName=:companyName ) and c.sectorCd=s.sectorCd and c.exchCd=e.exchCd and st.companyCd=c.companyCd")
-	public List<Object[]> findCompanyDetailByName(String companyName);
+			+ "from Company c, Sector s, Exchange e, Stock st where ( c.companyName like %:searchStr% or c.companyCd like %:searchStr% ) and c.sectorCd=s.sectorCd and c.exchCd=e.exchCd and st.companyCd=c.companyCd")
+	public List<Object[]> findMatchedCompanyDetail(String searchStr);
 
 }

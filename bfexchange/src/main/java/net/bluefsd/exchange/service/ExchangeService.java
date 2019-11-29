@@ -5,11 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import net.bluefsd.entity.Company;
 import net.bluefsd.entity.Exchange;
 import net.bluefsd.exchange.dao.ExchangeRepository;
+import net.bluefsd.model.CompanyDetail;
+import net.bluefsd.util.CompanyUtil;
 
-@Service(value="exchangeService")
+@Service(value = "exchangeService")
 public class ExchangeService {
 	@Autowired
 	ExchangeRepository exchangeRepository;
@@ -22,8 +23,13 @@ public class ExchangeService {
 		return exchangeRepository.listExchange();
 	}
 
-	public List<Company> listCompanyByExchange(String exchangeCd) {
-		return exchangeRepository.listCompanyByExchange(exchangeCd);
+	public List<CompanyDetail> findCompanyDetailByCd(String exchangeCd) {
+		List<Object[]> list = exchangeRepository.findCompanyDetailByCd(exchangeCd);
+		return CompanyUtil.composeCompanyDetail(list);
+	}
+
+	public Exchange findExchangeByCd(String exchCd) {
+		return exchangeRepository.findById(exchCd).get();
 	}
 
 }

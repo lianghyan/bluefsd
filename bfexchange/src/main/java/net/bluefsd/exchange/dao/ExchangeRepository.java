@@ -12,13 +12,14 @@ import net.bluefsd.entity.Company;
 import net.bluefsd.entity.Exchange;
 
 @Repository(value = "exchangeRepository")
-public interface ExchangeRepository extends JpaRepository<Exchange, Long> {
+public interface ExchangeRepository extends JpaRepository<Exchange, String> {
 
 	@Transactional(readOnly = true)
 	@Query(value = "SELECT e FROM Exchange e")
 	public List<Exchange> listExchange();
 
 	@Transactional(readOnly = true)
-	@Query(value = "SELECT c FROM Company c, Stock s where s.exchCd= :exchCd and c.companyCd=s.companyCd")
-	public List<Company> listCompanyByExchange(@Param("exchCd") String exchCd);
+	@Query(value = "select c.companyCd, c.companyName, c.ceoName, c.exchCd, e.exchName, c.director, c.brief, c.sectorCd, s.sectorName , st.stockCd "
+			+ "from Company c, Sector s, Exchange e , Stock st where c.exchCd=:exchCd and c.sectorCd=s.sectorCd and c.exchCd=e.exchCd and st.companyCd=c.companyCd")
+	public List<Object[]> findCompanyDetailByCd(@Param("exchCd") String exchCd); 
 }

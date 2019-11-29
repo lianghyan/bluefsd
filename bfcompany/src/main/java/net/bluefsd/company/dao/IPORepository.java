@@ -14,6 +14,6 @@ public interface IPORepository extends JpaRepository<IPOPlan, Long> {
 
 	@Transactional(readOnly = true)
 	@Query(value = "SELECT u FROM IPOPlan u WHERE companyCd=:companyCd")
-	public Company findIPOByCompanyCd(@Param("companyCd") String companyCd);
+	public IPOPlan findIPOByCompanyCd(@Param("companyCd") String companyCd);
 
 }

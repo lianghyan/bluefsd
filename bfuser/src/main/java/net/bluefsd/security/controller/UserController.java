@@ -31,11 +31,10 @@ public class UserController extends BaseController {
 	MailService mailService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public Map createToken(@RequestBody BFUser u)
-			throws AuthenticationException {
+	public Map createToken(@RequestBody BFUser u) throws AuthenticationException {
 		try {
 			String token = authService.login(u.getUserName(), u.getPassword());
-			return composeReturnMap("token", token);
+			return composeReturnMap("token", token, "Create token successfully!", "Fail to create token!");
 		} catch (Exception ex) {
 			String msg = ex.getMessage();
 			return composeErrorMap(msg);
@@ -49,10 +48,8 @@ public class UserController extends BaseController {
 		}
 		try {
 			BFUser user = authService.createAccount(u);
-			Map map = composeReturnMap("Account is saved successfully!");
-			map.put("id", user.getId());
-			return map;
-
+			return composeReturnMap("data", user, "Create profile successfully!", "Fail to create profile!");
+ 
 		} catch (Exception ex) {
 			String msg = ex.getMessage();
 			return composeErrorMap(msg);
@@ -82,13 +79,9 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/activate", method = RequestMethod.GET)
 	public Map activate(String verifyCode) {
 		String userName = authService.verify(verifyCode);
-		if (userName != null) {
-			return composeReturnMap(
-					"User " + userName + " complete verification successfully! You can signin with your account now.");
-		} else {
-			return composeErrorMap("Invalid verification link");
-		}
-	}
+		
+		return composeReturnMap("data", userName, "User " + userName + " complete verification successfully! You can signin with your account now.", "Invalid verification link!");
+ 	}
 
 	public static void main(String args[]) {
 

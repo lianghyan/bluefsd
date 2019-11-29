@@ -15,4 +15,8 @@ public class IPOService {
 	public IPOPlan add(IPOPlan ipoPlan) {
 		return ipoRepository.save(ipoPlan);
 	}
+
+	public IPOPlan findIpoPlan(String companyCd) {
+		return ipoRepository.findIPOByCompanyCd(companyCd);
+	}
 }

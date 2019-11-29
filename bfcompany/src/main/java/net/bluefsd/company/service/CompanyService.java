@@ -10,6 +10,7 @@ import net.bluefsd.company.dao.CompanyRepository;
 import net.bluefsd.company.dao.IPORepository;
 import net.bluefsd.entity.Company;
 import net.bluefsd.model.CompanyDetail;
+import net.bluefsd.util.CompanyUtil;
 
 @Service
 public class CompanyService {
@@ -28,11 +29,7 @@ public class CompanyService {
 		return companyRepository.findCompanyByCd(companyCd);
 	}
 
-	public List findCompanyIPODetails(String companyCd) {
-		return null;
-	}
-
-	public void updateCompanyDetail(CompanyDetail cd) {
+	public Company updateCompanyDetail(CompanyDetail cd) {
 		Company cp = new Company();
 		cp.setBrief(cd.getBrief());
 		cp.setCeoName(cd.getCeoName());
@@ -40,7 +37,7 @@ public class CompanyService {
 		cp.setDirector(cd.getDirector());
 		cp.setExchCd(cd.getExchCd());
 		cp.setSectorCd(cd.getSectorCd());
-		companyRepository.save(cp);
+		return companyRepository.save(cp);
 	}
 
 	public CompanyDetail findCompanyDetail(String companyCd) throws Exception {
@@ -50,7 +47,7 @@ public class CompanyService {
 			throw new Exception("Can't find any company!");
 		} else {
 			Object[] obj = list.get(0);
-			CompanyDetail cd = composeCompanyDetail(obj);
+			CompanyDetail cd = CompanyUtil.composeCompanyDetail(obj);
 			return cd;
 		}
 	}
@@ -61,54 +58,25 @@ public class CompanyService {
 		if (list == null || list.size() <= 0) {
 			throw new Exception("Can't find any company!");
 		} else {
-			for (int i = 0; i < list.size(); i++) {
-				Object[] obj = list.get(i);
-				CompanyDetail cd = composeCompanyDetail(obj);
-				cdList.add(cd);
-			}
+			cdList=CompanyUtil.composeCompanyDetail(list);
 		}
 		return cdList;
 	}
 
-	public List<CompanyDetail> findCompanyDetailByName(String companyName) throws Exception {
+	public List<CompanyDetail> findMatchedCompanyDetail(String searchStr) throws Exception {
 		List<CompanyDetail> cdList = new ArrayList<>();
-		List<Object[]> list = companyRepository.findCompanyDetailByName(companyName);
+		List<Object[]> list = companyRepository.findMatchedCompanyDetail(searchStr);
 		if (list == null || list.size() <= 0) {
 			throw new Exception("Can't find any company!");
 		} else {
-			for (int i = 0; i < list.size(); i++) {
-				Object[] obj = list.get(i);
-				CompanyDetail cd = composeCompanyDetail(obj);
-				cdList.add(cd);
-			}
+			cdList=CompanyUtil.composeCompanyDetail(list);
 		}
 		return cdList;
-	}
-
-	private CompanyDetail composeCompanyDetail(Object[] obj) {
-		// select c.companyCd, c.companyName,c.ceoName, c.exchCd, e.exchName,
-		// c.director, c.brief,
-		// c.sectorCd, s.sectorName
-		CompanyDetail cd = new CompanyDetail();
-		int index = 0;
-		cd.setCompanyCd((String) obj[index++]);
-		cd.setCompanyName((String) obj[index++]);
-		cd.setCeoName((String) obj[index++]);
-		cd.setExchCd((String) obj[index++]);
-		cd.setExchName((String) obj[index++]);
-		cd.setDirector((String) obj[index++]);
-		cd.setBrief((String) obj[index++]);
-		cd.setSectorCd((String) obj[index++]);
-		cd.setSectorName((String) obj[index++]);
-		cd.setStockCd((String) obj[index++]);
-
-		return cd;
 	}
 
 	public List<String> listCompanyName(String searchStr) {
 		List<String> list = companyRepository.findMatchedCompanyName(searchStr);
 		return list;
 	}
- 
 
 }

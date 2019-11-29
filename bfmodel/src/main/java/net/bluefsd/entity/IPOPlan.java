@@ -22,7 +22,7 @@ public class IPOPlan {
 	private String companyCd;
 
 	@Column(name = "exchange_cd", length = 20)
-	private String exchangeCd;
+	private String exchCd;
 
 	@Column(name = "price_per_share")
 	private double pricePerShare;
@@ -84,11 +84,12 @@ public class IPOPlan {
 		this.remarks = remarks;
 	}
 
-	public String getExchangeCd() {
-		return exchangeCd;
+	public String getExchCd() {
+		return exchCd;
 	}
 
-	public void setExchangeCd(String exchangeCd) {
-		this.exchangeCd = exchangeCd;
+	public void setExchCd(String exchCd) {
+		this.exchCd = exchCd;
 	}
+ 
 }

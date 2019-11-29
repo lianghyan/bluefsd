@@ -12,6 +12,23 @@ public class BaseController {
 	@Autowired
 	protected MessageSource messageSource;
 
+	public Map composeReturnMap(String key, Object value, String retMsg, String errMsg) {
+		Map<String, Object> map = new HashMap<>();
+		// Locale locale = LocaleContextHolder.getLocale();
+		if (value != null) {
+			map.put("retMsg", retMsg);
+			map.put(key.trim(), value);
+			map.put("status", "0");
+
+		} else {
+			map.put("retMsg", errMsg);
+			map.put("status", "-1");
+		}
+
+
+		return map;
+	}
+
 	public Map composeReturnMap() {
 		Map<String, Object> map = new HashMap<>();
 		// Locale locale = LocaleContextHolder.getLocale();
@@ -22,7 +39,7 @@ public class BaseController {
 		return map;
 	}
 
-	public Map composeReturnMap(String msg) {
+	public Map composeReturnMap_(String msg) {
 		Map<String, Object> map = new HashMap<>();
 		// Locale locale = LocaleContextHolder.getLocale();
 		map.put("status", "0");
@@ -30,7 +47,7 @@ public class BaseController {
 		return map;
 	}
 
-	public Map composeReturnMap(String key, Object object) {
+	public Map composeReturnMap_(String key, Object object) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("status", "0");
 		map.put(key, object);
