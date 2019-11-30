@@ -23,58 +23,65 @@ public class StockPriceController extends BaseController {
 	StockPriceService stockPriceService;
 
 	@RequestMapping(value = { "/listpricedetail" }, method = RequestMethod.POST)
-	public Map<String, List<StockPriceDetail>> ListStockPrice(String[] stockCds, String from, String to) {
+	public Map ListStockPrice(String[] stockCds, String fromDate, String toDate) {
 		try {
-			return stockPriceService.listStockPrice(stockCds, from, to);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+			Map<String, List<StockPriceDetail>> detailMap = stockPriceService.listStockPrice(stockCds, fromDate, toDate);
+			return composeReturnMap("data", detailMap, "find data successfully!", "No data found!");
+
+		} catch (Exception ex) {
+			String msg = ex.getMessage();
+			return composeErrorMap(msg);
 		}
 	}
 
 	@RequestMapping(value = { "/pricedetail" }, method = RequestMethod.POST)
-	public Map<String, StockPriceDetail> findPriceDetail(String stockCd) {
+	public Map findPriceDetail(String stockCd) {
 		try {
-			return stockPriceService.findStockPrice(stockCd);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+			Map<String, StockPriceDetail> detailMap = stockPriceService.findStockPrice(stockCd);
+			return composeReturnMap("data", detailMap, "find data successfully!", "No data found!");
+
+		} catch (Exception ex) {
+			String msg = ex.getMessage();
+			return composeErrorMap(msg);
 		}
 	}
 
 	@RequestMapping(value = { "/listsectorprice" }, method = RequestMethod.POST)
-	public Map<String, List<SectorPriceDetail>> ListSectorPrice(String[] sectorCds, String from, String to) {
+	public Map ListSectorPrice(String[] sectorCds, String fromDate, String toDate) {
 		try {
-			return stockPriceService.listSectorPrice(sectorCds, from, to);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+			Map<String, List<SectorPriceDetail>> detailMap = stockPriceService.listSectorPrice(sectorCds, fromDate, toDate);
+			return composeReturnMap("data", detailMap, "find data successfully!", "No data found!");
+		} catch (Exception ex) {
+			String msg = ex.getMessage();
+			return composeErrorMap(msg);
 		}
 	}
 
 	@RequestMapping(value = { "/sectorprice" }, method = RequestMethod.POST)
-	public Map<String, SectorPriceDetail> findSecotrPrice(String sectorCd) {
+	public Map findSecotrPrice(String sectorCd) {
 		try {
-			return stockPriceService.findSecotrPrice(sectorCd);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+			Map<String, SectorPriceDetail> detailMap = stockPriceService.findSecotrPrice(sectorCd);
+			return composeReturnMap("data", detailMap, "find data successfully!", "No data found!");
+		} catch (Exception ex) {
+			String msg = ex.getMessage();
+			return composeErrorMap(msg);
 		}
 	}
 
 	@RequestMapping(value = { "/stocksectorprice" }, method = RequestMethod.POST)
-	public Map<String, List<Object>> findStockSectorPrice(String stockCd, String from, String to) {
+	public Map findStockSectorPrice(String stockCd, String fromDate, String toDate) {
 		try {
-			return stockPriceService.findStockSectorPrice(stockCd, from, to);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+			Map<String, List<Object>> detailMap = stockPriceService.findStockSectorPrice(stockCd, fromDate, toDate);
+			return composeReturnMap("data", detailMap, "find data successfully!", "No data found!");
+		} catch (Exception ex) {
+			String msg = ex.getMessage();
+			return composeErrorMap(msg);
 		}
 	}
 
 	@RequestMapping(value = { "/add" }, method = RequestMethod.POST)
 	public Map add(Stock stock) {
-		stockPriceService.add(stock);
-		return composeReturnMap();
+		Stock ret = stockPriceService.add(stock);
+		return composeReturnMap("data", ret, "Save data successfully!", "No data updated!");
 	}
 }

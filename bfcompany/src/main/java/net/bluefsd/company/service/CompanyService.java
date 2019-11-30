@@ -74,9 +74,15 @@ public class CompanyService {
 		return cdList;
 	}
 
-	public List<String> listCompanyName(String searchStr) {
+	public List<String> listCompanyNames(String searchStr) {
 		List<String> list = companyRepository.findMatchedCompanyName(searchStr);
 		return list;
+	}
+
+	public List<String[]> listCompanyNames() {
+		List<String[]> list = companyRepository.findCompanyNames();
+		return list;
+
 	}
 
 }

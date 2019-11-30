@@ -28,7 +28,7 @@ public class CompanyController extends BaseController {
 	public Map updateCompany(@RequestBody CompanyDetail compDetails) {
 		try {
 			Company comp = companyService.updateCompanyDetail(compDetails);
-			return composeReturnMap("data", comp.getCompanyCd(), "save company successfully!", "Fail to save company!");
+			return composeReturnMap("data", comp.getCompanyCd(), "Save data successfully!", "No data updated!");
 
 		} catch (Exception ex) {
 			String msg = ex.getMessage();
@@ -41,8 +41,7 @@ public class CompanyController extends BaseController {
 	public Map findCompanyDetail(@RequestParam String companyCd) {
 		try {
 			CompanyDetail data = companyService.findCompanyDetail(companyCd);
-			return composeReturnMap("data", data, "Find company[" + companyCd + "] successfully!",
-					"Fail to find company[" + companyCd + "]!");
+			return composeReturnMap("data", data, "Find data successfully!", "No data found!");
 		} catch (Exception ex) {
 			String msg = ex.getMessage();
 			return composeErrorMap(msg);
@@ -54,7 +53,20 @@ public class CompanyController extends BaseController {
 	public Map listCompanyDetail() {
 		try {
 			List<CompanyDetail> cdList = companyService.listCompanyDetail();
-			return composeReturnMap("dataList", cdList, "Find companies successfully!", "Fail to find companies!");
+			return composeReturnMap("dataList", cdList, "Find data successfully!", "No data found!");
+
+		} catch (Exception ex) {
+			String msg = ex.getMessage();
+			return composeErrorMap(msg);
+
+		}
+	}
+
+	@RequestMapping(value = { "/searchcompanyname" }, method = RequestMethod.POST)
+	public Map listCompanyNames(@RequestParam String searchStr) {
+		try {
+			List<String> cdList = companyService.listCompanyNames(searchStr);
+			return composeReturnMap("dataList", cdList, "Find data successfully!", "No data found!");
 
 		} catch (Exception ex) {
 			String msg = ex.getMessage();
@@ -64,10 +76,10 @@ public class CompanyController extends BaseController {
 	}
 
 	@RequestMapping(value = { "/listcompanyname" }, method = RequestMethod.POST)
-	public Map listCompanyName(@RequestParam String searchStr) {
+	public Map listCompanyNames() {
 		try {
-			List<String> cdList = companyService.listCompanyName(searchStr);
-			return composeReturnMap("dataList", cdList, "Find companies successfully!", "Fail to find companies!");
+			List<String[]> cdList = companyService.listCompanyNames();
+			return composeReturnMap("dataList", cdList, "Find data successfully!", "No data found!");
 
 		} catch (Exception ex) {
 			String msg = ex.getMessage();
@@ -80,7 +92,7 @@ public class CompanyController extends BaseController {
 	public Map findMatchedCompanyDetail(@RequestParam String searchStr) {
 		try {
 			List<CompanyDetail> cdList = companyService.findMatchedCompanyDetail(searchStr);
-			return composeReturnMap("dataList", cdList, "Find companies successfully!", "Fail to find companies!");
+			return composeReturnMap("dataList", cdList, "Find data successfully!", "No data found!");
 
 		} catch (Exception ex) {
 			String msg = ex.getMessage();
