@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.bluefsd.comm.controller.BaseController;
-import net.bluefsd.company.service.StockPriceService;
+import net.bluefsd.comm.service.StockPriceService;
 import net.bluefsd.entity.Stock;
 import net.bluefsd.model.SectorPriceDetail;
 import net.bluefsd.model.StockPriceDetail;

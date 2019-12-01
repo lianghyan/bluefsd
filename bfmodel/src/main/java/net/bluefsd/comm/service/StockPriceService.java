@@ -1,4 +1,4 @@
-package net.bluefsd.company.service;
+package net.bluefsd.comm.service;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -12,8 +12,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import net.bluefsd.dao.StockPriceRepository;
-import net.bluefsd.dao.StockRepository;
+import net.bluefsd.comm.dao.StockPriceRepository;
+import net.bluefsd.comm.dao.StockRepository;
 import net.bluefsd.entity.Stock;
 import net.bluefsd.entity.StockPrice;
 import net.bluefsd.model.SectorPriceDetail;

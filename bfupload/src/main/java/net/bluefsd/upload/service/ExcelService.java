@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import net.bluefsd.dao.StockPriceRepository;
+import net.bluefsd.comm.dao.StockPriceRepository;
 import net.bluefsd.entity.StockPrice;
 import net.bluefsd.upload.controller.ResultBean;
 

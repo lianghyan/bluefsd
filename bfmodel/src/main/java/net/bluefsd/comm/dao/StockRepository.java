@@ -1,4 +1,4 @@
-package net.bluefsd.dao;
+package net.bluefsd.comm.dao;
 
 import java.util.List;
 
