@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import net.bluefsd.comm.service.StockPriceService;
+import net.bluefsd.model.PriceDetail;
+import net.bluefsd.model.SectorPriceDetail;
 import net.bluefsd.model.StockPriceDetail;
 import net.bluefsd.upload.service.ExcelService;
 import net.bluefsd.upload.util.ExcelUtil;
@@ -55,7 +57,7 @@ public class ExcelController {
 		headers.add("Pragma", "no-cache");
 		headers.add("Expires", "0");
 
-		Map<String, StockPriceDetail> detailMap = stockPriceService.findStockPrice(stockCd);
+		Map<String, PriceDetail> detailMap = stockPriceService.findStockPrice(stockCd);
 		XSSFWorkbook workbook = ExcelUtil.composeStock(detailMap);
 		workbook.write(new FileOutputStream(new File("c:\\temp\\aaa.xlsx")));
 
@@ -69,7 +71,7 @@ public class ExcelController {
 	public void downloadStock(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			String stockCd = request.getParameter("stockCd");
-			Map<String, StockPriceDetail> detailMap = stockPriceService.findStockPrice(stockCd);
+			Map<String, PriceDetail> detailMap = stockPriceService.findStockPrice(stockCd);
 			XSSFWorkbook workbook = ExcelUtil.composeStock(detailMap);
 
 			String mimeType = "application/octet-stream";
@@ -93,7 +95,76 @@ public class ExcelController {
 			String[] stockCds = request.getParameterValues("stockCd");
 			String fromDate = request.getParameter("fromDate");
 			String toDate = request.getParameter("toDate");
-			Map<String, List<StockPriceDetail>> detailMap = stockPriceService.listStockPrice(stockCds, fromDate, toDate);
+			Map<String, List<PriceDetail>> detailMap = stockPriceService.listStockPrice(stockCds, fromDate, toDate);
+			XSSFWorkbook workbook = ExcelUtil.composeStockList(detailMap);
+
+			String mimeType = "application/octet-stream";
+
+			// set content attributes for the response
+			response.setContentType(mimeType);
+
+			// set headers for the response
+			String headerKey = "Content-Disposition";
+			String headerValue = String.format("attachment; filename=\"%s\"", "fsdexcel.xlsx");
+			response.setHeader(headerKey, headerValue);
+			workbook.write(response.getOutputStream());
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(value = "/sector", method = RequestMethod.GET)
+	public void downloadSector(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			String sectorCd = request.getParameter("sectorCd");
+			Map<String, PriceDetail> detailMap = stockPriceService.findSecotrPrice(sectorCd);
+			XSSFWorkbook workbook = ExcelUtil.composeStock(detailMap);
+
+			String mimeType = "application/octet-stream";
+
+			// set content attributes for the response
+			response.setContentType(mimeType);
+
+			// set headers for the response
+			String headerKey = "Content-Disposition";
+			String headerValue = String.format("attachment; filename=\"%s\"", "fsdexcel.xlsx");
+			response.setHeader(headerKey, headerValue);
+			workbook.write(response.getOutputStream());
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(value = "/sectorList", method = RequestMethod.GET)
+	public void downloadSectorList(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			String[] sectorCd = request.getParameterValues("sectorCd");
+			String fromDate = request.getParameter("fromDate");
+			String toDate = request.getParameter("toDate");
+			Map<String, List<PriceDetail>> detailMap = stockPriceService.listSectorPrice(sectorCd, fromDate, toDate);
+			XSSFWorkbook workbook = ExcelUtil.composeStockList(detailMap);
+
+			String mimeType = "application/octet-stream";
+
+			// set content attributes for the response
+			response.setContentType(mimeType);
+
+			// set headers for the response
+			String headerKey = "Content-Disposition";
+			String headerValue = String.format("attachment; filename=\"%s\"", "fsdexcel.xlsx");
+			response.setHeader(headerKey, headerValue);
+			workbook.write(response.getOutputStream());
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+	@RequestMapping(value = "/stocksector", method = RequestMethod.GET)
+	public void downloadStockSector(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			String stockCd = request.getParameter("stockCd");
+			String fromDate = request.getParameter("fromDate");
+			String toDate = request.getParameter("toDate");
+			Map<String, List<PriceDetail>> detailMap = stockPriceService.findStockSectorPrice(stockCd, fromDate, toDate);
 			XSSFWorkbook workbook = ExcelUtil.composeStockList(detailMap);
 
 			String mimeType = "application/octet-stream";

@@ -1,9 +1,5 @@
 package net.bluefsd.upload.util;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -12,18 +8,21 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import net.bluefsd.model.PriceDetail;
+import net.bluefsd.model.SectorPriceDetail;
 import net.bluefsd.model.StockPriceDetail;
 
 public class ExcelUtil {
 
-	public static XSSFWorkbook composeStock(Map<String, StockPriceDetail> detailMap) throws Exception {
+	public static XSSFWorkbook composeStock(Map<String,PriceDetail> detailMap)
+			throws Exception {
 		// OutputStream os = new FileOutputStream("c:\\temp\\aa.excel");
 		XSSFWorkbook workbook = new XSSFWorkbook();
 
 		Iterator<String> it = detailMap.keySet().iterator();
 		while (it.hasNext()) {
 			String key = (String) it.next();
-			StockPriceDetail detail = detailMap.get(key);
+			PriceDetail detail = detailMap.get(key);
 			XSSFSheet sheet = workbook.createSheet(detail.getIntervalType());
 			int row = 0;
 			appendStockSheet(sheet, row, detail);
@@ -32,14 +31,14 @@ public class ExcelUtil {
 		return workbook;
 	}
 
-	public static XSSFWorkbook composeStockList(Map<String, List<StockPriceDetail>> detailMap) {
+	public static XSSFWorkbook composeStockList(Map<String, List<PriceDetail>> detailMap) {
 		XSSFWorkbook workbook = new XSSFWorkbook();
-		
+
 		Iterator<String> it = detailMap.keySet().iterator();
 		while (it.hasNext()) {
 			String key = (String) it.next();
-			List<StockPriceDetail> details = detailMap.get(key);
-			StockPriceDetail detail = details.get(0);
+			List<PriceDetail> details = detailMap.get(key);
+			PriceDetail detail = details.get(0);
 			XSSFSheet sheet = workbook.createSheet(detail.getIntervalType());
 			int row = 0;
 			for (int i = 0; i < details.size(); i++) {
@@ -50,11 +49,17 @@ public class ExcelUtil {
 		return workbook;
 	}
 
-	private static int appendStockSheet(XSSFSheet sheet, int row, StockPriceDetail detail) {
+	private static int appendStockSheet(XSSFSheet sheet, int row, PriceDetail detail) {
 		// stockCd
-		XSSFRow sheetRow = sheet.createRow(row++);
-		sheetRow.createCell(0).setCellValue("StockCd");
-		sheetRow.createCell(1).setCellValue(detail.getStockCd());
+		XSSFRow sheetRow = sheet.createRow(row++);		
+		
+		if (detail instanceof SectorPriceDetail) {
+			sheetRow.createCell(0).setCellValue("sectorCd");
+			sheetRow.createCell(1).setCellValue(((SectorPriceDetail) detail).getSectorCd());
+		} else {
+			sheetRow.createCell(0).setCellValue("stockCd");
+			sheetRow.createCell(1).setCellValue(((StockPriceDetail) detail).getStockCd());
+		}
 		// dates
 		sheetRow = sheet.createRow(row++);
 		sheetRow.createCell(0).setCellValue("dates");
