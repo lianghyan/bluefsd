@@ -88,6 +88,19 @@ public class CompanyController extends BaseController {
 		}
 	}
 
+	@RequestMapping(value = { "/companycdnames" }, method = RequestMethod.POST)
+	public Map findCompanyCdNames() {
+		try {
+			List<String[]> cdList = companyService.findCompanyCdNames();
+			return composeReturnMap("dataList", cdList, "Find data successfully!", "No data found!");
+
+		} catch (Exception ex) {
+			String msg = ex.getMessage();
+			return composeErrorMap(msg);
+
+		}
+	}
+	
 	@RequestMapping(value = { "/matchcompany" }, method = RequestMethod.POST)
 	public Map findMatchedCompanyDetail(@RequestParam String searchStr) {
 		try {

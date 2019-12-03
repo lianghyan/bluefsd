@@ -1,0 +1,39 @@
+package net.bluefsd.ribbon.controller;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import feign.RequestInterceptor;
+import feign.RequestTemplate;
+
+@Configuration
+public class FeignTokenInterceptor implements RequestInterceptor {
+
+
+    @Override
+    public void apply(RequestTemplate template) {
+
+        HttpServletRequest request = getServletRequest();
+        if (null == request){
+            return;
+        }
+
+        template.header("fsdtoken", getToken(request));
+        template.header("fsdhope", "hope it works");
+        template.body("this is a good start!");
+    }
+
+    private HttpServletRequest getServletRequest() {
+        return ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
+    }
+
+    private String getToken(HttpServletRequest request){
+        return request.getHeader("fsdtoken");
+    }
+
+
+}

@@ -24,7 +24,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import net.bluefsd.main.BaseTestController;
-import net.bluefsd.security.AppConfig;
+import net.bluefsd.user.AppConfig;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Import({ AppConfig.class })

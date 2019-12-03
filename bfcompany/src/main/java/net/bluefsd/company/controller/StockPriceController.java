@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import net.bluefsd.comm.controller.BaseController;
 import net.bluefsd.comm.service.StockPriceService;
 import net.bluefsd.entity.Stock;
-import net.bluefsd.model.SectorPriceDetail;
-import net.bluefsd.model.StockPriceDetail;
+import net.bluefsd.model.PriceDetail;
 
 @RestController
 @CrossOrigin
@@ -25,7 +24,7 @@ public class StockPriceController extends BaseController {
 	@RequestMapping(value = { "/listpricedetail" }, method = RequestMethod.POST)
 	public Map ListStockPrice(String[] stockCds, String fromDate, String toDate) {
 		try {
-			Map<String, List<StockPriceDetail>> detailMap = stockPriceService.listStockPrice(stockCds, fromDate, toDate);
+			Map<String, List<PriceDetail>> detailMap = stockPriceService.listStockPrice(stockCds, fromDate, toDate);
 			return composeReturnMap("data", detailMap, "find data successfully!", "No data found!");
 
 		} catch (Exception ex) {
@@ -37,7 +36,7 @@ public class StockPriceController extends BaseController {
 	@RequestMapping(value = { "/pricedetail" }, method = RequestMethod.POST)
 	public Map findPriceDetail(String stockCd) {
 		try {
-			Map<String, StockPriceDetail> detailMap = stockPriceService.findStockPrice(stockCd);
+			Map<String, PriceDetail> detailMap = stockPriceService.findStockPrice(stockCd);
 			return composeReturnMap("data", detailMap, "find data successfully!", "No data found!");
 
 		} catch (Exception ex) {
@@ -49,7 +48,7 @@ public class StockPriceController extends BaseController {
 	@RequestMapping(value = { "/listsectorprice" }, method = RequestMethod.POST)
 	public Map ListSectorPrice(String[] sectorCds, String fromDate, String toDate) {
 		try {
-			Map<String, List<SectorPriceDetail>> detailMap = stockPriceService.listSectorPrice(sectorCds, fromDate, toDate);
+			Map<String, List<PriceDetail>> detailMap = stockPriceService.listSectorPrice(sectorCds, fromDate, toDate);
 			return composeReturnMap("data", detailMap, "find data successfully!", "No data found!");
 		} catch (Exception ex) {
 			String msg = ex.getMessage();
@@ -60,7 +59,7 @@ public class StockPriceController extends BaseController {
 	@RequestMapping(value = { "/sectorprice" }, method = RequestMethod.POST)
 	public Map findSecotrPrice(String sectorCd) {
 		try {
-			Map<String, SectorPriceDetail> detailMap = stockPriceService.findSecotrPrice(sectorCd);
+			Map<String, PriceDetail> detailMap = stockPriceService.findSecotrPrice(sectorCd);
 			return composeReturnMap("data", detailMap, "find data successfully!", "No data found!");
 		} catch (Exception ex) {
 			String msg = ex.getMessage();
@@ -71,7 +70,7 @@ public class StockPriceController extends BaseController {
 	@RequestMapping(value = { "/stocksectorprice" }, method = RequestMethod.POST)
 	public Map findStockSectorPrice(String stockCd, String fromDate, String toDate) {
 		try {
-			Map<String, List<Object>> detailMap = stockPriceService.findStockSectorPrice(stockCd, fromDate, toDate);
+			Map<String, List<PriceDetail>> detailMap = stockPriceService.findStockSectorPrice(stockCd, fromDate, toDate);
 			return composeReturnMap("data", detailMap, "find data successfully!", "No data found!");
 		} catch (Exception ex) {
 			String msg = ex.getMessage();

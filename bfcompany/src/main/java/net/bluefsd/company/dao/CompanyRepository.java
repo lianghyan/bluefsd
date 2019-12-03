@@ -45,4 +45,7 @@ public interface CompanyRepository extends JpaRepository<Company, String> {
 	@Query(value = "SELECT s.stockCd, u.companyName FROM Company u, Stock s where u.companyCd=s.companyCd")
 	public List<String[]> findCompanyNames();
 
+	@Transactional(readOnly = true)
+	@Query(value = "SELECT u.companyCd, u.companyName FROM Company u")
+	public List<String[]> findCompanyCdNames();
 }

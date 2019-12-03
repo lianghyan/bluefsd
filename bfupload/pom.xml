@@ -16,16 +16,6 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <dependencies>
-    		<dependency>
-			<groupId>net.bluefsd</groupId>
-			<artifactId>bfbasetest</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-				<dependency>
-			<groupId>net.bluefsd</groupId>
-			<artifactId>bfmodel</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
 		<dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
@@ -40,6 +30,21 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.4</version>
+        </dependency>
+    		<dependency>
+			<groupId>net.bluefsd</groupId>
+			<artifactId>bfbasetest</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>net.bluefsd</groupId>
+			<artifactId>bfmodel</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+        <dependency>
+        	<groupId>net.bluefsd</groupId>
+        	<artifactId>bfcomm</artifactId>
+        	<version>0.0.1-SNAPSHOT</version>
         </dependency>
   </dependencies>
 </project>

@@ -34,6 +34,7 @@ public class CompanyService {
 		cp.setBrief(cd.getBrief());
 		cp.setCeoName(cd.getCeoName());
 		cp.setCompanyCd(cd.getCompanyCd());
+		cp.setCompanyName(cd.getCompanyName());
 		cp.setDirector(cd.getDirector());
 		cp.setExchCd(cd.getExchCd());
 		cp.setSectorCd(cd.getSectorCd());
@@ -84,5 +85,9 @@ public class CompanyService {
 		return list;
 
 	}
+	public List<String[]> findCompanyCdNames() {
+		List<String[]> list = companyRepository.findCompanyCdNames();
+		return list;
 
+	}
 }
