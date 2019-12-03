@@ -49,7 +49,7 @@ public class BearTokenFilter extends OncePerRequestFilter {
 
 	private boolean needValidate(HttpServletRequest request) {
 		String url = request.getRequestURL().toString();
-		if (/*url.endsWith(tokenPath) || */url.endsWith(userUpdate)) {
+		if (url.endsWith(tokenPath) || url.endsWith(userUpdate)) {
 			return false;
 		}
 
@@ -75,15 +75,14 @@ public class BearTokenFilter extends OncePerRequestFilter {
 			String name = (String) names.nextElement();
 			System.out.println("--header----" + name + ":" + request.getHeader(name));
 		}
-		if("GET".equals(request.getMethod())) {
-			response.setStatus(200);
-			response.getWriter().write("return with Get ");
-			return;
-		}
+		 
 		if (!needValidate(request)) {
 			String reqHeader = request.getHeader(HEADER_AUTH);
 			if(reqHeader==null) {
 				reqHeader=request.getHeader("fsdtoken");
+			}
+			if(reqHeader==null) {
+				reqHeader=request.getParameter("fsdtoken");
 			}
 			String msg = null;
 			if (reqHeader == null) {
@@ -141,7 +140,7 @@ public class BearTokenFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		String url = request.getServletPath();
 		if (url.endsWith(tokenPath)) {
-			response.getWriter().write("false");
+			response.getWriter().write("fail");
 		} else {
 			Date curDate = new Date();
 			Map<String, String> map = new HashMap();

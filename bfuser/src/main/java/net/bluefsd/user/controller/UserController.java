@@ -8,7 +8,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -64,8 +63,8 @@ public class UserController extends BaseController {
 	}
 
 	@RequestMapping(value = "/canaccess", method = RequestMethod.POST)
-	public boolean verifyToken(@RequestHeader(value = "fsdtoken") String token) throws AuthenticationException {
-		return true;
+	public String verifyToken() throws AuthenticationException {
+		return "ok";
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
@@ -87,6 +86,12 @@ public class UserController extends BaseController {
 		String userName = authService.verify(verifyCode);
 		
 		return composeReturnMap("data", userName, "User " + userName + " complete verification successfully! You can signin with your account now.", "Invalid verification link!");
+ 	}
+
+	@RequestMapping(value = "/sayHello", method = RequestMethod.POST)
+	public Map sayHello(String verifyCode) {		 
+		
+		return composeReturnMap("data", "hello", "User  complete verification successfully! You can signin with your account now.", "Invalid verification link!");
  	}
 
 	public static void main(String args[]) {

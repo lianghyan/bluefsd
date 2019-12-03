@@ -23,8 +23,6 @@ public class FeignTokenInterceptor implements RequestInterceptor {
         }
 
         template.header("fsdtoken", getToken(request));
-        template.header("fsdhope", "hope it works");
-        template.body("this is a good start!");
     }
 
     private HttpServletRequest getServletRequest() {
