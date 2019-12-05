@@ -31,7 +31,7 @@ public class IPOPlan {
 	private long totalShares;
 
 	@Column(name = "open_date")
-	private Timestamp openDate;
+	private String openDate;
 
 	@Column(name = "remarks")
 	private String remarks;
@@ -68,11 +68,11 @@ public class IPOPlan {
 		this.totalShares = totalShares;
 	}
 
-	public Timestamp getOpenDate() {
+	public String getOpenDate() {
 		return openDate;
 	}
 
-	public void setOpenDate(Timestamp openDate) {
+	public void setOpenDate(String openDate) {
 		this.openDate = openDate;
 	}
 

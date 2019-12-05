@@ -1,30 +1,38 @@
 package bet.bluefsd.exchange;
 
+import java.util.Map;
+import java.util.Random;
+
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 public class ExchangeManager {
-	public static void create1(MockHttpServletRequestBuilder request) {
-		request.param("exchCd", "BSE");
-		request.param("exchName", "BSE stock exchange");
-		request.param("brief", "established in 1987");
-		request.param("contact_addr", "Manama, Bahrain");
-		request.param("remarks", "I have no more information");
+	static Random r = new Random(1);
+	static int ui = 1;
+
+	public static void create1(Map<String, Object> map) {
+		ui = r.nextInt();
+		map.put("exchCd", "shanghi" + ui);
+		map.put("exchName", "BSE stock exchange" + ui);
+		map.put("brief", "established in 1987" + ui);
+		map.put("contact_addr", "Manama, Bahrain" + ui);
+		map.put("remarks", "I have no more information" + ui);
 	}
 
-	public static void create2(MockHttpServletRequestBuilder request) {
-		request.param("exchCd", "NSE");
-		request.param("exchName", "National Stock Exchange");
-		request.param("brief", "The largest stock exchange in India");
-		request.param("contact_addr", "Manama, Bahrain");
-		request.param("remarks", "will get more information");
+	public static void create2(Map<String, Object> map) {
+		int ui = r.nextInt();
+		map.put("exchCd", "dalian" + ui);
+		map.put("exchName", "National Stock Exchange" + ui);
+		map.put("brief", "The largest stock exchange in India" + ui);
+		map.put("contact_addr", "Manama, Bahrain" + ui);
+		map.put("remarks", "will get more information" + ui);
 
 	}
 
-	public static void update(MockHttpServletRequestBuilder request) {
-		request.param("exchCd", "NSE");
-		request.param("exchName", "National Stock Exchange");
-		request.param("brief", "The largest stock exchange in India");
-		request.param("contact_addr", "Manama, Bahrain");
-		request.param("remarks", "update with no more information");
+	public static void update(Map<String, Object> map) {
+		map.put("exchCd", "shanghi" + ui);
+		map.put("exchName", "National Stock Exchange");
+		map.put("brief", "The largest stock exchange in India");
+		map.put("contact_addr", "Manama, Bahrain");
+		map.put("remarks", "update with no more information");
 	}
 }

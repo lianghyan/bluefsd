@@ -13,8 +13,8 @@ public class MailService {
 	@Value("${spring.mail.username}")
 	private String from;
 	
-	@Value("")
-	private String verifyLink;
+	@Value("$fsd.verification.url")
+	private static String verifyLink;
 
 	@Autowired
 	private JavaMailSender mailSender;
@@ -37,7 +37,8 @@ public class MailService {
 	}
 
 	private static String composeSimpleContent(BFUser user) {
-		String link = "http://localhost:4200/signup?baxjkd;afja;fd;as";
+		
+		String link = verifyLink + "?verifyCode=" + user.getVerifyCode();;
 		StringBuffer sb = new StringBuffer();
 		sb.append("Hi " + user.getUserName() + ":\r\n");
 		sb.append("\r\n");

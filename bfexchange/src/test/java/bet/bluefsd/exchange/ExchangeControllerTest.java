@@ -27,26 +27,22 @@ import net.bluefsd.main.BaseTestController;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Import({ AppConfig.class })
 public class ExchangeControllerTest extends BaseTestController {
-	static int userId = 0;
-
 	@Test
 	public void u_1_add() throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		ObjectMapper mapper = new ObjectMapper();
+		ExchangeManager.create1(map);
 		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/exchange/create");
 		request.content(mapper.writeValueAsString(map)).header("Authorization", token)
 				.contentType(MediaType.APPLICATION_JSON_UTF8);
-		// UserManager.createUser(request);
-		// UserManager.createUser1(request);
-		// UserManager.createMentor(request);
-		ExchangeManager.create1(request);
+	
 		ResultActions matcher = this.mockMvc.perform(request).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 		matcher.andDo(MockMvcResultHandlers.print());
-		matcher.andExpect(jsonPath("$.exchCd").value("BSE"));
+		//matcher.andExpect(jsonPath("$.exchCd").value("BSE"));
 		String responseStr = matcher.andReturn().getResponse().getContentAsString();
 		JSONObject object = (JSONObject) JSONObject.parseObject(responseStr);
-		String BSE = (String) object.get("exchCd");
+		matcher.andExpect(jsonPath("$.status").value(0));
 		printResponse(matcher);
 	}
 
@@ -54,18 +50,19 @@ public class ExchangeControllerTest extends BaseTestController {
 	public void u_2_add() throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		ObjectMapper mapper = new ObjectMapper();
+		ExchangeManager.create2(map);
 		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/exchange/add");
 		request.content(mapper.writeValueAsString(map)).header("Authorization", token)
 				.contentType(MediaType.APPLICATION_JSON_UTF8);
-		ExchangeManager.create2(request);
+
 		ResultActions matcher = this.mockMvc.perform(request).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 		matcher.andDo(MockMvcResultHandlers.print());
-		matcher.andExpect(jsonPath("$.exchCd").value("NSE"));
+		//matcher.andExpect(jsonPath("$.exchCd").value("NSE"));
 
 		String responseStr = matcher.andReturn().getResponse().getContentAsString();
 		JSONObject object = (JSONObject) JSONObject.parseObject(responseStr);
-		String BSE = (String) object.get("exchCd");
+		matcher.andExpect(jsonPath("$.status").value(0));
 		printResponse(matcher);
 	}
 
@@ -81,7 +78,7 @@ public class ExchangeControllerTest extends BaseTestController {
 		ResultActions matcher = this.mockMvc.perform(request).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));// application/json;charset=UTF-8
 		matcher.andDo(MockMvcResultHandlers.print());
-		matcher.andExpect(jsonPath("$").isArray());
+		matcher.andExpect(jsonPath("$.status").value(0));
 		printResponse(matcher);
 	}
 
@@ -98,7 +95,7 @@ public class ExchangeControllerTest extends BaseTestController {
 		ResultActions matcher = this.mockMvc.perform(request).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));// application/json;charset=UTF-8
 		matcher.andDo(MockMvcResultHandlers.print());
-		matcher.andExpect(jsonPath("$").isArray());
+		matcher.andExpect(jsonPath("$.status").value(0));
 		printResponse(matcher);
 	}
 	@Test
@@ -106,13 +103,14 @@ public class ExchangeControllerTest extends BaseTestController {
 		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/exchange/update");
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String, Object> map = new HashMap<>();
+		ExchangeManager.update(map);
 		request.content(mapper.writeValueAsString(map)).header("Authorization", token)
 				.contentType(MediaType.APPLICATION_JSON_UTF8).accept(MediaType.APPLICATION_JSON_UTF8);
-		ExchangeManager.update(request);
+		
 		ResultActions matcher = this.mockMvc.perform(request).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 		matcher.andDo(MockMvcResultHandlers.print());
-		matcher.andExpect(jsonPath("$.ret").value("success"));
+		matcher.andExpect(jsonPath("$.status").value(0));
 	}
 
 }

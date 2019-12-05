@@ -29,19 +29,18 @@ public class IPOCotnrollerTest extends BaseTestController {
 	public void u_1_add() throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		ObjectMapper mapper = new ObjectMapper();
+		IPOManager.create_1(map);
+
 		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/ipo/add");
 		request.content(mapper.writeValueAsString(map)).header("Authorization", token)
 				.contentType(MediaType.APPLICATION_JSON_UTF8);
 
-		IPOManager.create_1(request);
 		ResultActions matcher = this.mockMvc.perform(request).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 		matcher.andDo(MockMvcResultHandlers.print());
-		matcher.andExpect(jsonPath("$.id").isNumber());
-		matcher.andExpect(jsonPath("$.companyCd").value("01NEL"));
 		String responseStr = matcher.andReturn().getResponse().getContentAsString();
 		JSONObject object = (JSONObject) JSONObject.parseObject(responseStr);
-		int userId = (Integer) object.get("id");
+		matcher.andExpect(jsonPath("$.status").value(0));
 		printResponse(matcher);
 	}
 
@@ -49,19 +48,37 @@ public class IPOCotnrollerTest extends BaseTestController {
 	public void u_2_add() throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		ObjectMapper mapper = new ObjectMapper();
-		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/ipo/add");
+		IPOManager.create_2(map);
+
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/ipo/create");
 		request.content(mapper.writeValueAsString(map)).header("Authorization", token)
 				.contentType(MediaType.APPLICATION_JSON_UTF8);
 
-		IPOManager.create_2(request);
 		ResultActions matcher = this.mockMvc.perform(request).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 		matcher.andDo(MockMvcResultHandlers.print());
-		matcher.andExpect(jsonPath("$.id").isNumber());
-		matcher.andExpect(jsonPath("$.companyCd").value("01YXL"));
 		String responseStr = matcher.andReturn().getResponse().getContentAsString();
 		JSONObject object = (JSONObject) JSONObject.parseObject(responseStr);
-		int userId = (Integer) object.get("id");
+		matcher.andExpect(jsonPath("$.status").value(0));
+		printResponse(matcher);
+	}
+
+	@Test
+	public void u_2_find() throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		ObjectMapper mapper = new ObjectMapper();
+		//IPOManager.create_2(map);
+
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/ipo/ipo");
+		request.content(mapper.writeValueAsString(map)).header("Authorization", token)
+				.contentType(MediaType.APPLICATION_JSON_UTF8);
+		request.param("companyCd", "neu");
+		ResultActions matcher = this.mockMvc.perform(request).andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
+		matcher.andDo(MockMvcResultHandlers.print());
+		String responseStr = matcher.andReturn().getResponse().getContentAsString();
+		JSONObject object = (JSONObject) JSONObject.parseObject(responseStr);
+		matcher.andExpect(jsonPath("$.status").value(0));
 		printResponse(matcher);
 	}
 }

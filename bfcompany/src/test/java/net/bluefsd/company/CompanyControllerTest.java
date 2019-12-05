@@ -27,102 +27,118 @@ import net.bluefsd.main.BaseTestController;
 public class CompanyControllerTest extends BaseTestController {
 	static int userId = 0;
 
-	//@Test
+	@Test
 	public void u_1_add() throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		ObjectMapper mapper = new ObjectMapper();
+ 		CompanyManager.create_1(map);
 		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/company/add");
 		request.content(mapper.writeValueAsString(map)).header("Authorization", token)
 				.contentType(MediaType.APPLICATION_JSON_UTF8);
-		// UserManager.createUser(request);
-		// UserManager.createUser1(request);
-		// UserManager.createMentor(request);
-		CompanyManager.create_1(request);
 		ResultActions matcher = this.mockMvc.perform(request).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 		matcher.andDo(MockMvcResultHandlers.print());
-		matcher.andExpect(jsonPath("$.companyCd").isString());
-		matcher.andExpect(jsonPath("$.ceoName").value("John"));
-		String responseStr = matcher.andReturn().getResponse().getContentAsString();
+ 		String responseStr = matcher.andReturn().getResponse().getContentAsString();
 		JSONObject object = (JSONObject) JSONObject.parseObject(responseStr);
-		userId = (Integer) object.get("ceoName");
+	//	userId = (Integer) object.get("ceoName");
 		printResponse(matcher);
 	}
 
-	// @Test
+ @Test
 	public void u_2_add() throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		ObjectMapper mapper = new ObjectMapper();
-		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/company/create");
+		CompanyManager.create_2(map);
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/company/add");
 		request.content(mapper.writeValueAsString(map)).header("Authorization", token)
 				.contentType(MediaType.APPLICATION_JSON_UTF8);
-		CompanyManager.create_2(request);
 		// request.content(content);
 		ResultActions matcher = this.mockMvc.perform(request).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 		matcher.andDo(MockMvcResultHandlers.print());
-		matcher.andExpect(jsonPath("$.companyCd").isString());
-		matcher.andExpect(jsonPath("$.ceoName").value("John"));
-		String responseStr = matcher.andReturn().getResponse().getContentAsString();
+	 	String responseStr = matcher.andReturn().getResponse().getContentAsString();
 		JSONObject object = (JSONObject) JSONObject.parseObject(responseStr);
-		int userId = (Integer) object.get("companyCd");
+		matcher.andExpect(jsonPath("$.status").value(0));
 		printResponse(matcher);
 	}
 
-	//@Test
+	@Test
 	public void u_4_update() throws Exception {
 		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/company/update");
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String, Object> map = new HashMap<>();
+		CompanyManager.update(map);
 		request.content(mapper.writeValueAsString(map)).header("Authorization", token)
 				.contentType(MediaType.APPLICATION_JSON_UTF8).accept(MediaType.APPLICATION_JSON_UTF8);
-		CompanyManager.update(request, 1);
 		ResultActions matcher = this.mockMvc.perform(request).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 		matcher.andDo(MockMvcResultHandlers.print());
-		matcher.andExpect(jsonPath("$.ceoName").value("John"));
+		matcher.andExpect(jsonPath("$.status").value(0));
 	}
 
-	//@Test
+	@Test
 	public void u_4_listCompany() throws Exception {
-		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/company/listcompanydetail");
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/company/listcompany");
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String, Object> map = new HashMap<>();
 		request.content(mapper.writeValueAsString(map)).header("Authorization", token)
 				.contentType(MediaType.APPLICATION_JSON_UTF8).accept(MediaType.APPLICATION_JSON_UTF8);
-		request.param("searchStr", "IB");
+	 		ResultActions matcher = this.mockMvc.perform(request).andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
+		matcher.andDo(MockMvcResultHandlers.print());
+		matcher.andExpect(jsonPath("$.status").value(0));
+	}
+	//@Test
+	public void u_56_listCompanybyName() throws Exception {
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/company/searchcompanyname");
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> map = new HashMap<>();
+		request.content(mapper.writeValueAsString(map)).header("Authorization", token)
+				.contentType(MediaType.APPLICATION_JSON_UTF8).accept(MediaType.APPLICATION_JSON_UTF8);
+		request.param("searchStr", "Inter");
 		ResultActions matcher = this.mockMvc.perform(request).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 		matcher.andDo(MockMvcResultHandlers.print());
-		//matcher.andExpect(jsonPath("$.ceoName").value("John"));
+		matcher.andExpect(jsonPath("$.status").value(0));
 	}
-	
 	@Test
-	public void u_5_listCompanyName() throws Exception {
+	public void u_6_listCompanyName() throws Exception {
 		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/company/listcompanyname");
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String, Object> map = new HashMap<>();
 		request.content(mapper.writeValueAsString(map)).header("Authorization", token)
 				.contentType(MediaType.APPLICATION_JSON_UTF8).accept(MediaType.APPLICATION_JSON_UTF8);
-		request.param("searchStr", "IB");
+		 
 		ResultActions matcher = this.mockMvc.perform(request).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 		matcher.andDo(MockMvcResultHandlers.print());
-		//matcher.andExpect(jsonPath("$.ceoName").value("John"));
+		matcher.andExpect(jsonPath("$.status").value(0));
 	}
-	//@Test
-	public void u_6_listCompanybyName() throws Exception {
-		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/company/companybyname");
+
+	@Test
+	public void u_7_companycdnames() throws Exception {
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/company/companycdnames");
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String, Object> map = new HashMap<>();
 		request.content(mapper.writeValueAsString(map)).header("Authorization", token)
 				.contentType(MediaType.APPLICATION_JSON_UTF8).accept(MediaType.APPLICATION_JSON_UTF8);
-		request.param("companyName", "International Business Machine Company");
+		 
 		ResultActions matcher = this.mockMvc.perform(request).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 		matcher.andDo(MockMvcResultHandlers.print());
-		//matcher.andExpect(jsonPath("$.ceoName").value("John"));
+		matcher.andExpect(jsonPath("$.status").value(0));
 	}
-
-	
+	@Test
+	public void u_8_matchcompany() throws Exception {
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/company/matchcompany");
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> map = new HashMap<>();
+		request.content(mapper.writeValueAsString(map)).header("Authorization", token)
+				.contentType(MediaType.APPLICATION_JSON_UTF8).accept(MediaType.APPLICATION_JSON_UTF8);
+		request.param("searchStr", "neu");
+		ResultActions matcher = this.mockMvc.perform(request).andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
+		matcher.andDo(MockMvcResultHandlers.print());
+		matcher.andExpect(jsonPath("$.status").value(0));
+	}
 }

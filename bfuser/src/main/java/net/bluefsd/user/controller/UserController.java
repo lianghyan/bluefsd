@@ -88,12 +88,6 @@ public class UserController extends BaseController {
 		return composeReturnMap("data", userName, "User " + userName + " complete verification successfully! You can signin with your account now.", "Invalid verification link!");
  	}
 
-	@RequestMapping(value = "/sayHello", method = RequestMethod.POST)
-	public Map sayHello(String verifyCode) {		 
-		
-		return composeReturnMap("data", "hello", "User  complete verification successfully! You can signin with your account now.", "Invalid verification link!");
- 	}
-
 	public static void main(String args[]) {
 
 		UID uid = new UID();

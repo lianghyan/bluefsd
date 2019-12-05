@@ -1,4 +1,5 @@
-C:\lysoftware\ststprj\bluefsdcloud\bfcomm\src\main\java\net\bluefsd\comm\LoginInterceptor.java
-C:\lysoftware\ststprj\bluefsdcloud\bfcomm\src\main\java\net\bluefsd\comm\BfWebMvcConfig.java
-C:\lysoftware\ststprj\bluefsdcloud\bfcomm\src\main\java\net\bluefsd\comm\FeignTokenInterceptor.java
-C:\lysoftware\ststprj\bluefsdcloud\bfcomm\src\main\java\net\bluefsd\comm\TokenService.java
+C:\lysoftware\ststprj\bluefsdcloud\bfcomm\src\main\java\net\bluefsd\security\TestFeignController.java
+C:\lysoftware\ststprj\bluefsdcloud\bfcomm\src\main\java\net\bluefsd\security\TokenService.java
+C:\lysoftware\ststprj\bluefsdcloud\bfcomm\src\main\java\net\bluefsd\security\BfWebMvcConfig.java
+C:\lysoftware\ststprj\bluefsdcloud\bfcomm\src\main\java\net\bluefsd\security\FeignTokenInterceptor.java
+C:\lysoftware\ststprj\bluefsdcloud\bfcomm\src\main\java\net\bluefsd\security\LoginInterceptor.java

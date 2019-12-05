@@ -4,26 +4,27 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Map;
 
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 public class IPOManager {
-	public static void create_1(MockHttpServletRequestBuilder request) {
-		request.param("companyCd", "01NEL");
-		request.param("exchangeCd", "NSE");
-		request.param("pricePerShare", "10.00");
-		request.param("totalShares", "1000");
-		request.param("openDate", "2020-02-02 09:00:00");
-		request.param("remarks", "good luck");
+	public static void create_1(Map<String, Object> map) {
+		map.put("companyCd", "01NEL");
+		map.put("exchCd", "NSE");
+		map.put("pricePerShare", "10.00");
+		map.put("totalShares", "1000");
+		map.put("openDate", "2020-02-02 09:00:00");
+		map.put("remarks", "good luck");
 	}
 
-	public static void create_2(MockHttpServletRequestBuilder request) {
-		request.param("companyCd", "01YXL");
-		request.param("exchangeCd", "NSE");
-		request.param("pricePerShare", "10.00");
-		request.param("totalShares", "1000");
-		request.param("openDate", "2020-02-02 09:00:00");
-		request.param("remarks", "good luck");
+	public static void create_2(Map<String, Object> map) {
+		map.put("companyCd", "01YXL");
+		map.put("exchCd", "NSE");
+		map.put("pricePerShare", "10.00");
+		map.put("totalShares", "1000");
+		map.put("openDate", "2020-02-02 09:00:00");
+		map.put("remarks", "good luck");
 	}
 
 	private static Timestamp getTime() {

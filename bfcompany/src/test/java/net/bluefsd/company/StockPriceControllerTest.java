@@ -25,7 +25,7 @@ import net.bluefsd.main.BaseTestController;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Import({ AppConfig.class })
 public class StockPriceControllerTest extends BaseTestController {
-	// @Test
+	@Test
 	public void t_1_add() throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		ObjectMapper mapper = new ObjectMapper();
@@ -36,15 +36,13 @@ public class StockPriceControllerTest extends BaseTestController {
 		ResultActions matcher = this.mockMvc.perform(request).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 		matcher.andDo(MockMvcResultHandlers.print());
-		matcher.andExpect(jsonPath("$.companyCd").value("neu"));
-		matcher.andExpect(jsonPath("$.stockCd").value("500112"));
 		String responseStr = matcher.andReturn().getResponse().getContentAsString();
 		JSONObject object = (JSONObject) JSONObject.parseObject(responseStr);
-		String exch = (String) object.get("exchCd");
+		matcher.andExpect(jsonPath("$.status").value(0));
 		printResponse(matcher);
 	}
 
-	 //@Test
+	@Test
 	public void t_2_list() throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		ObjectMapper mapper = new ObjectMapper();
@@ -55,15 +53,13 @@ public class StockPriceControllerTest extends BaseTestController {
 		ResultActions matcher = this.mockMvc.perform(request).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 		matcher.andDo(MockMvcResultHandlers.print());
-		matcher.andExpect(jsonPath("$.companyCd").value("neu"));
-		matcher.andExpect(jsonPath("$.stockCd").value("500112"));
 		String responseStr = matcher.andReturn().getResponse().getContentAsString();
 		JSONObject object = (JSONObject) JSONObject.parseObject(responseStr);
-		int userId = (Integer) object.get("companyCd");
+		matcher.andExpect(jsonPath("$.status").value(0));
 		printResponse(matcher);
 	}
 
-	// @Test
+	@Test
 	public void t_3_find() throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		ObjectMapper mapper = new ObjectMapper();
@@ -74,15 +70,13 @@ public class StockPriceControllerTest extends BaseTestController {
 		ResultActions matcher = this.mockMvc.perform(request).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 		matcher.andDo(MockMvcResultHandlers.print());
-		matcher.andExpect(jsonPath("$.companyCd").value("neu"));
-		matcher.andExpect(jsonPath("$.stockCd").value("500112"));
 		String responseStr = matcher.andReturn().getResponse().getContentAsString();
 		JSONObject object = (JSONObject) JSONObject.parseObject(responseStr);
-		int userId = (Integer) object.get("companyCd");
+		matcher.andExpect(jsonPath("$.status").value(0));
 		printResponse(matcher);
 	}
 
-	// @Test
+	@Test
 	public void t_4_find_sector() throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		ObjectMapper mapper = new ObjectMapper();
@@ -93,15 +87,13 @@ public class StockPriceControllerTest extends BaseTestController {
 		ResultActions matcher = this.mockMvc.perform(request).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 		matcher.andDo(MockMvcResultHandlers.print());
-		matcher.andExpect(jsonPath("$.companyCd").value("neu"));
-		matcher.andExpect(jsonPath("$.stockCd").value("500112"));
 		String responseStr = matcher.andReturn().getResponse().getContentAsString();
 		JSONObject object = (JSONObject) JSONObject.parseObject(responseStr);
-		int userId = (Integer) object.get("companyCd");
+		matcher.andExpect(jsonPath("$.status").value(0));
 		printResponse(matcher);
 	}
 
-	// @Test
+	@Test
 	public void t_5_list_sector() throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		ObjectMapper mapper = new ObjectMapper();
@@ -112,11 +104,9 @@ public class StockPriceControllerTest extends BaseTestController {
 		ResultActions matcher = this.mockMvc.perform(request).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 		matcher.andDo(MockMvcResultHandlers.print());
-		matcher.andExpect(jsonPath("$.companyCd").value("neu"));
-		matcher.andExpect(jsonPath("$.stockCd").value("500112"));
 		String responseStr = matcher.andReturn().getResponse().getContentAsString();
 		JSONObject object = (JSONObject) JSONObject.parseObject(responseStr);
-		int userId = (Integer) object.get("companyCd");
+		matcher.andExpect(jsonPath("$.status").value(0));
 		printResponse(matcher);
 	}
 
@@ -131,11 +121,9 @@ public class StockPriceControllerTest extends BaseTestController {
 		ResultActions matcher = this.mockMvc.perform(request).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 		matcher.andDo(MockMvcResultHandlers.print());
-		matcher.andExpect(jsonPath("$.companyCd").value("neu"));
-		matcher.andExpect(jsonPath("$.stockCd").value("500112"));
 		String responseStr = matcher.andReturn().getResponse().getContentAsString();
 		JSONObject object = (JSONObject) JSONObject.parseObject(responseStr);
-		int userId = (Integer) object.get("companyCd");
+		matcher.andExpect(jsonPath("$.status").value(0));
 		printResponse(matcher);
 	}
 }

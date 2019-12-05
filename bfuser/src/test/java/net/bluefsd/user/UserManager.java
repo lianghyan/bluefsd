@@ -1,43 +1,50 @@
 package net.bluefsd.user;
 
+import java.util.Map;
+import java.util.Random;
+
 import org.apache.tomcat.util.codec.binary.Base64;
-import org.assertj.core.internal.Bytes;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.util.DigestUtils;
 
 public class UserManager {
-	public static void createUser(MockHttpServletRequestBuilder request) {
-		request.param("userName", "usky");
-		request.param("password", enCodePass());
-		request.param("email", "liangydl@cn.ibm.com");
-		request.param("mobileNumber", "0411-8888");
-		request.param("role", "user");
+	static Random r = new Random(1);
+
+	public static void createUser(Map<String, Object> map) {
+		int ui = r.nextInt();
+		//map.put("userName", "usky" + ui);
+		map.put("userName", "usky");
+		map.put("password", enCodePass());
+		map.put("email", "liangydl@cn.ibm.com");
+		map.put("mobileNumber", "0411-8888");
+		map.put("role", "user");
 
 	}
 
-	public static void createAdmin(MockHttpServletRequestBuilder request) {
-		request.param("userName", "admsky");
-		request.param("password", enCodePass());
-		request.param("email", "liangydl@cn.ibm.com");
-		request.param("mobileNumber", "0411-8888");
-		request.param("role", "admin");
+	public static void createAdmin(Map<String, Object> map) {
+		int ui = r.nextInt();
+		//map.put("userName", "admsky"+ui);
+		map.put("userName", "admsky");
+		map.put("password", enCodePass());
+		map.put("email", "liangydl@cn.ibm.com");
+		map.put("mobileNumber", "0411-8888");
+		map.put("role", "admin");
 	}
 
-	public static void update(MockHttpServletRequestBuilder request, int userId) {
-		request.param("id", "" + 2);
-		request.param("userName", "usky");
-		request.param("password", enCodePass());
-		request.param("email", "liangydl@cn.ibm.com");
-		request.param("mobileNumber", "0411-99999");
-		// request.param("role", "admin");
+	public static void update(Map<String, Object> map) {
+		map.put("id", "" + 7);
+		map.put("userName", "ustart");
+		map.put("password", "111111");
+		map.put("email", "liangydl@cn.ibm.com");
+		map.put("mobileNumber", "0411-99999");
+		map.put("role", "user");
 	}
 
 	public static String enCodePass() {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		String rawPassword = "111111";
 		String enPwd = encoder.encode(rawPassword);
-		
+		System.out.println(enPwd);
 		return enPwd;
 	}
 
@@ -45,11 +52,13 @@ public class UserManager {
 		/* 可逆算法 */
 		String base64 = "111111";
 		byte[] byte64 = Base64.encodeBase64(base64.getBytes(), true);
-		System.out.println("加密后:" + new String(byte64));
+		System.out.println("after encryption:" + new String(byte64));
 
 		String rev64 = new String(byte64);
 		byte[] rev = Base64.decodeBase64(rev64.getBytes());
-		System.out.println("解密后:" + new String(rev));
+		System.out.println("after decryption:" + new String(rev));
+		
+		enCodePass();
 
 	}
 }
