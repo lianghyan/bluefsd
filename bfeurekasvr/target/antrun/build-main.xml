@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<project name="maven-antrun-" default="main"  >
-<target name="main">
-  <echo>********+C:\lysoftware\ststprj\bluefsdcloud\bfeurekasvr\target\bfeurekasvr-0.0.1-SNAPSHOT.jar</echo>
-  <echo>C:\lysoftware\ststprj\bluefsdcloud\bfeurekasvr</echo>
-  <copy file="C:\lysoftware\ststprj\bluefsdcloud\bfeurekasvr\target\\bfeurekasvr-0.0.1-SNAPSHOT.jar" tofile="C:\lysoftware\ststprj\bluefsdcloud\bfeurekasvr\\..\\lib\\bfeurekasvr-0.0.1-SNAPSHOT.jar" overwrite="true"/>
-</target>
-</project>

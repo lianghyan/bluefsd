@@ -32,6 +32,7 @@ public class MailService {
 
 			mailSender.send(message);
 		} catch (Exception e) {
+			System.out.println("---------"+user.getEmail());
 			e.printStackTrace();
 		}
 	}

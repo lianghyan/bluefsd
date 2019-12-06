@@ -16,7 +16,7 @@
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<skipTests>true</skipTests>
+		<!-- <skipTests>true</skipTests> -->
 	</properties>
 	<dependencies><dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -62,7 +62,7 @@
 						 <tasks>
 						 	<echo>${project.build.directory}\${project.artifactId}-${project.version}.jar</echo>
 							<echo>${project.basedir}</echo>
-							<copy overwrite="true" tofile="${project.basedir}\\..\\lib\\${project.artifactId}-${project.version}.jar"
+							<copy overwrite="true" tofile="${project.basedir}\\..\\..\\fsdlib\\${project.artifactId}-${project.version}.jar"
 								file="${project.build.directory}\\${project.artifactId}-${project.version}.jar"/>
 						 </tasks>
 				         </configuration>

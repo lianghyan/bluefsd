@@ -67,7 +67,7 @@
 						 <tasks>
 						 	<echo>********+${project.build.directory}\${project.artifactId}-${project.version}.jar</echo>
 							<echo>${project.basedir}</echo>
-							<copy overwrite="true" tofile="${project.basedir}\\..\\lib\\${project.artifactId}-${project.version}.jar"
+							<copy overwrite="true" tofile="${project.basedir}\\..\\..\\fsdlib\\${project.artifactId}-${project.version}.jar"
 								file="${project.build.directory}\\${project.artifactId}-${project.version}.jar"/>
 						 </tasks>
 				         </configuration>
