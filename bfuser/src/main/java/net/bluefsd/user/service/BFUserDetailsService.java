@@ -35,16 +35,18 @@ public class BFUserDetailsService implements UserDetailsService {
 	@Autowired
 	private BearTokenUtil jwtTokenUtil;
 
+	private BFUser bfUser;
+
 	@Override
 	public UserDetails loadUserByUsername(String input) throws UsernameNotFoundException {
 		log.debug("--------------try to find user: " + input);
-		BFUser fsduser = userRepository.findUserByName(input);
-		if (null == fsduser) {
+		bfUser = userRepository.findUserByName(input);
+		if (null == bfUser) {
 			throw new UsernameNotFoundException(input);
 		}
-		String un = fsduser.getUserName();
-		String pwd = fsduser.getPassword();
-		String role = fsduser.getRole();
+		String un = bfUser.getUserName();
+		String pwd = bfUser.getPassword();
+		String role = bfUser.getRole();
 
 		List<SimpleGrantedAuthority> auList = new ArrayList<>();
 		SimpleGrantedAuthority sga = new SimpleGrantedAuthority(role);
@@ -108,6 +110,14 @@ public class BFUserDetailsService implements UserDetailsService {
 			return user.getUserName();
 		}
 		return null;
+	}
+
+	public BFUser getBfUser() {
+		return bfUser;
+	}
+
+	public void setBfUser(BFUser bfUser) {
+		this.bfUser = bfUser;
 	}
 
 }

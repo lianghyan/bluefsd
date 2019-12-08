@@ -35,7 +35,10 @@ public class UserController extends BaseController {
 	public Map createToken(@RequestBody BFUser u) throws AuthenticationException {
 		try {
 			String token = authService.login(u.getUserName(), u.getPassword());
-			return composeReturnMap("token", token, "Create token successfully!", "Fail to create token!");
+			BFUser bfuser=authService.getBfUser();
+			Map map=composeReturnMap("token", token, "Create token successfully!", "Fail to create token!");
+			map.put("role", bfuser.getRole());
+			return map;
 		} catch (Exception ex) {
 			if(ex instanceof UsernameNotFoundException) {
 				String msg="User("+ex.getMessage()+") can not be found!";

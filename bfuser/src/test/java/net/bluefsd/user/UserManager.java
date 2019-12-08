@@ -44,8 +44,8 @@ public class UserManager {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		String rawPassword = "111111";
 		String enPwd = encoder.encode(rawPassword);
-		System.out.println(enPwd);
-		return enPwd;
+		System.out.println("encryption password:"+enPwd);
+		return rawPassword;
 	}
 
 	public static void main(String[] args) {
