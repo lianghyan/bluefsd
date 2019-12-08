@@ -21,5 +21,9 @@ public interface ExchangeRepository extends JpaRepository<Exchange, String> {
 	@Transactional(readOnly = true)
 	@Query(value = "select c.companyCd, c.companyName, c.ceoName, c.exchCd, e.exchName, c.director, c.brief, c.sectorCd, s.sectorName , st.stockCd "
 			+ "from Company c, Sector s, Exchange e , Stock st where c.exchCd=:exchCd and c.sectorCd=s.sectorCd and c.exchCd=e.exchCd and st.companyCd=c.companyCd")
-	public List<Object[]> findCompanyDetailByCd(@Param("exchCd") String exchCd); 
+	public List<Object[]> findCompanyDetailByCd(@Param("exchCd") String exchCd);
+
+	@Transactional(readOnly = true)
+	@Query(value = "SELECT e.exchCd,e.exchName FROM Exchange e")
+	public List<Object[]> ListExchangeCdName();
 }

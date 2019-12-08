@@ -48,4 +48,11 @@ public class ExchangeController extends BaseController {
 		return composeReturnMap("dataList", dataList, "Find company successfully!", "No data found!");
 
 	}
+
+	@RequestMapping(value = "/listexchname", method = RequestMethod.POST)
+	public Map listExchangeCdName() {
+		List<Object[]> data = exchnageService.ListExchangeCdName();
+		return composeReturnMap("dataList", data, "Find exchange successfully!", "No data found!");
+
+	}
 }

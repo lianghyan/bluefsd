@@ -8,12 +8,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 public class UserManager {
-	static Random r = new Random(1);
+	static Random r = new Random(2);
 
 	public static void createUser(Map<String, Object> map) {
 		int ui = r.nextInt();
-		//map.put("userName", "usky" + ui);
-		map.put("userName", "usky");
+		map.put("userName", "usky" + ui);
+		//map.put("userName", "usky");
 		map.put("password", enCodePass());
 		map.put("email", "liangydl@cn.ibm.com");
 		map.put("mobileNumber", "0411-8888");
@@ -23,8 +23,8 @@ public class UserManager {
 
 	public static void createAdmin(Map<String, Object> map) {
 		int ui = r.nextInt();
-		//map.put("userName", "admsky"+ui);
-		map.put("userName", "admsky");
+		map.put("userName", "admsky"+ui);
+		//map.put("userName", "admsky");
 		map.put("password", enCodePass());
 		map.put("email", "liangydl@cn.ibm.com");
 		map.put("mobileNumber", "0411-8888");

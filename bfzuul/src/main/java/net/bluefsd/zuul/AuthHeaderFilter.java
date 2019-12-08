@@ -8,7 +8,7 @@ import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 @Component
 public class AuthHeaderFilter extends ZuulFilter {
-	public final static String HEADER_AUTH = "Authorization";
+	public final static String HEADER_AUTH = "fsdtoken";
 
 	public AuthHeaderFilter() {
 		super();
@@ -36,7 +36,6 @@ public class AuthHeaderFilter extends ZuulFilter {
         String token=request.getHeader(HEADER_AUTH);
  		ctx.addZuulRequestHeader("original_requestURL",request.getRequestURL().toString());		 
 		ctx.addZuulRequestHeader(HEADER_AUTH,token);
-		ctx.addZuulRequestHeader("FSDAuth",token);
- 		return null;
+  		return null;
 	}
 }

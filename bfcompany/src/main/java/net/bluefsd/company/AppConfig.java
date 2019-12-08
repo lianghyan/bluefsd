@@ -17,7 +17,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 //@EnableAspectJAutoProxy
 
 //@EnableJpaRepositories(basePackages = {"com.xx","com.yy"})
-//@EntityScan(basePackages = {"com.xx","com.yy"})
+//@EntityScan(basePackages = {"com.xx","com.yy"})F
 public class AppConfig {
 
 }

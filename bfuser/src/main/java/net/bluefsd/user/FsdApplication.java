@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
-//@EnableEurekaClient
-//@EnableDiscoveryClient
+@EnableEurekaClient
+@EnableDiscoveryClient
 @RestController
 @Import({AppConfig.class })
 public class FsdApplication {

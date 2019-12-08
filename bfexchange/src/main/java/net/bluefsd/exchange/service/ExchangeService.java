@@ -32,4 +32,8 @@ public class ExchangeService {
 		return exchangeRepository.findById(exchCd).get();
 	}
 
+	public List<Object[]> ListExchangeCdName() {
+		return exchangeRepository.ListExchangeCdName();
+	}
+
 }

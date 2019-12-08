@@ -36,12 +36,15 @@ public class LoginInterceptor implements HandlerInterceptor {
 			String name = (String) names.nextElement();
 			System.out.println("--param----" + name + ":" + request.getHeader(name));
 		}
-		String fsdtoken=request.getParameter("fsdtoken");
-		String allow=tokenService.allowaccess();
-//		if("ok".equals(allow)) 
-//		{
-//			return true;
-//		}
+		String fsdtoken = request.getHeader("fsdtoken");
+		if (fsdtoken == null) {
+			fsdtoken = request.getParameter("fsdtoken");
+		}
+		String allow = tokenService.allowaccess();
+		if("ok".equals(allow)) 
+		{
+			return true;
+		}
 		return true;
 	}
 

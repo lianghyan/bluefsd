@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ipo_plan")
+@Table(name = "ipoplan")
 @org.hibernate.annotations.Proxy(lazy = false)
 public class IPOPlan {
 	@Id
@@ -23,6 +23,9 @@ public class IPOPlan {
 
 	@Column(name = "exchange_cd", length = 20)
 	private String exchCd;
+
+	@Column(name = "stock_cd", length = 20)
+	private String stockCd;
 
 	@Column(name = "price_per_share")
 	private double pricePerShare;
@@ -91,5 +94,12 @@ public class IPOPlan {
 	public void setExchCd(String exchCd) {
 		this.exchCd = exchCd;
 	}
- 
+
+	public String getStockCd() {
+		return stockCd;
+	}
+
+	public void setStockCd(String stockCd) {
+		this.stockCd = stockCd;
+	}
 }

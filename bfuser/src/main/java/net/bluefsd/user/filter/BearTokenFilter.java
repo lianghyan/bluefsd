@@ -69,20 +69,21 @@ public class BearTokenFilter extends OncePerRequestFilter {
 			String name = (String) names.nextElement();
 			System.out.println("--param--" + name + ":" + request.getParameter(name));
 		}
-		System.out.println("********************"+request.getRequestURL().toString()+"&&&&&"+request.getMethod()+"***************");
+		System.out.println("********************" + request.getRequestURL().toString() + "&&&&&" + request.getMethod()
+				+ "***************");
 		names = request.getHeaderNames();
 		while (names.hasMoreElements()) {
 			String name = (String) names.nextElement();
 			System.out.println("--header----" + name + ":" + request.getHeader(name));
 		}
-		 
+
 		if (!needValidate(request)) {
 			String reqHeader = request.getHeader(HEADER_AUTH);
-			if(reqHeader==null) {
-				reqHeader=request.getHeader("fsdtoken");
+			if (reqHeader == null) {
+				reqHeader = request.getHeader("fsdtoken");
 			}
-			if(reqHeader==null) {
-				reqHeader=request.getParameter("fsdtoken");
+			if (reqHeader == null) {
+				reqHeader = request.getParameter("fsdtoken");
 			}
 			String msg = null;
 			if (reqHeader == null) {

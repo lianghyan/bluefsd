@@ -24,13 +24,18 @@ public class IPOController extends BaseController {
 
 	@RequestMapping(value = { "/add", "/create", "/update" }, method = RequestMethod.POST)
 	public Map add(@RequestBody IPOPlan ipoPlan) {
-		IPOPlan data = ipoService.add(ipoPlan);
-		return composeReturnMap("data", data, "Save data successfully!",  "No data updated!"); 
+		try {
+			IPOPlan data = ipoService.add(ipoPlan);
+			return composeReturnMap("data", data, "Save data successfully!", "No data updated!");
+		} catch (Exception ex) {
+			String msg = ex.getMessage();
+			return composeErrorMap(msg);
+		}
 	}
 
 	@RequestMapping(value = { "/ipo" }, method = RequestMethod.POST)
 	public Map find(@RequestParam String companyCd) {
 		IPOPlan data = ipoService.findIpoPlan(companyCd);
-		return composeReturnMap("data", data, "Find data successfully!", "No data found!"); 
+		return composeReturnMap("data", data, "Find data successfully!", "No data found!");
 	}
 }

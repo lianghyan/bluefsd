@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @SpringBootApplication
 @EnableDiscoveryClient
-//@RibbonClient(name = "bfuser", configuration = RibbonConfiguration.class)
-//@ComponentScan({ "net.bluefsd.ribbon"})
 public class App 
 {
     public static void main( String[] args )
