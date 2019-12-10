@@ -30,7 +30,11 @@ public class FeignTokenInterceptor implements RequestInterceptor {
     }
 
     private String getToken(HttpServletRequest request){
-        return request.getHeader("fsdtoken");
+        String token= request.getHeader("fsdtoken");
+        if(token==null) {
+        	token= request.getParameter("fsdtoken");
+        }
+        return token;
     }
 
 

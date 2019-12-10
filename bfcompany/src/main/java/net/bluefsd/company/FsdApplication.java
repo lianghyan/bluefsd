@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.web.bind.annotation.RestController;
 
 @EnableEurekaClient
-//@EnableFeignClients(basePackages = "net.bluefsd.security") 
+@EnableFeignClients(basePackages = "net.bluefsd.security") 
 @RestController
 @SpringBootApplication
 @EnableDiscoveryClient

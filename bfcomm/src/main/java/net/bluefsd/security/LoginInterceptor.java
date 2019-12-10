@@ -34,7 +34,13 @@ public class LoginInterceptor implements HandlerInterceptor {
 		names = request.getParameterNames();
 		while (names.hasMoreElements()) {
 			String name = (String) names.nextElement();
-			System.out.println("--param----" + name + ":" + request.getHeader(name));
+			System.out.println("--param----" + name + ":" + request.getParameter(name));
+		}
+		String method=request.getMethod();
+		if("OPTIONS".equals(method)) {
+			response.setStatus(200);
+			response.getWriter().write("ok");
+			return true;
 		}
 		String fsdtoken = request.getHeader("fsdtoken");
 		if (fsdtoken == null) {
@@ -45,7 +51,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 		{
 			return true;
 		}
-		return true;
+		return false;
 	}
 
 	@Override
